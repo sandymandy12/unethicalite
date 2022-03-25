@@ -1,9 +1,4 @@
 # Default ignored files
 /shelf/
 /workspace.xml
-compiler.xml
-gradle.xml
-jarRepositories.xml
-libraries-with-intellij-classes.xml
-misc.xml
-workspace.xml
+

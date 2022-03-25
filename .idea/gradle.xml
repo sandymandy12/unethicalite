@@ -23,6 +23,7 @@
             <option value="$PROJECT_DIR$/../plugins/hoot-tempoross" />
             <option value="$PROJECT_DIR$/../plugins/hoot-trawler" />
             <option value="$PROJECT_DIR$/../plugins/interaction-tester" />
+            <option value="$PROJECT_DIR$/../plugins/slayer" />
           </set>
         </option>
       </GradleProjectSettings>

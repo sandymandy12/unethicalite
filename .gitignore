@@ -4,7 +4,8 @@ nb-configuration.xml
 /nbproject/
 project.properties
 *.iml
-
+.idea/*
+!.idea/runConfigurations
 .project
 .settings/
 .classpath

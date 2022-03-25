@@ -519,12 +519,13 @@ public class WorldHopperPlugin extends Plugin
 			 */
 			if (previous)
 			{
-				worldIdx--;
-
-				if (worldIdx < 0)
-				{
-					worldIdx = worlds.size() - 1;
-				}
+//				worldIdx--;
+//
+//				if (worldIdx < 0)
+//				{
+//					worldIdx = worlds.size() - 1;
+//				}
+				worldIdx = java.util.concurrent.ThreadLocalRandom.current().nextInt(0, worlds.size());
 			}
 			else
 			{
