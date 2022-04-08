@@ -27,17 +27,6 @@ package net.runelite.client.ui.overlay;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.ArrayListMultimap;
-import java.awt.Dimension;
-import java.awt.Point;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.function.Predicate;
-import javax.inject.Inject;
-import javax.inject.Singleton;
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -49,6 +38,17 @@ import net.runelite.client.config.RuneLiteConfig;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.events.ConfigChanged;
 import net.runelite.client.events.PluginChanged;
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
+import java.awt.Dimension;
+import java.awt.Point;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.function.Predicate;
 
 /**
  * Manages state of all game overlays
@@ -91,7 +91,7 @@ public class OverlayManager
 	 * Insertion-order sorted set of overlays
 	 * All access to this must be guarded by a lock on this OverlayManager
 	 */
-	@Getter(AccessLevel.PACKAGE)
+	@Getter
 	private final List<Overlay> overlays = new ArrayList<>();
 	@Getter
 	@Setter
@@ -139,17 +139,17 @@ public class OverlayManager
 	 * @param layer the layer
 	 * @return An immutable list of all of the overlays on that layer
 	 */
-	Collection<Overlay> getLayer(OverlayLayer layer)
+	public Collection<Overlay> getLayer(OverlayLayer layer)
 	{
 		return Collections.unmodifiableCollection(overlayMap.get(layer));
 	}
 
-	Collection<Overlay> getForInterface(int interfaceId)
+	public Collection<Overlay> getForInterface(int interfaceId)
 	{
 		return Collections.unmodifiableCollection(overlayMap.get(interfaceId << 16 | 0xffff));
 	}
 
-	Collection<Overlay> getForLayer(int layerId)
+	public Collection<Overlay> getForLayer(int layerId)
 	{
 		return Collections.unmodifiableCollection(overlayMap.get(layerId));
 	}
@@ -266,7 +266,7 @@ public class OverlayManager
 		overlay.revalidate();
 	}
 
-	synchronized void rebuildOverlayLayers()
+	public synchronized void rebuildOverlayLayers()
 	{
 		ArrayListMultimap<Object, Overlay> overlayMap = ArrayListMultimap.create();
 		for (final Overlay overlay : overlays)
