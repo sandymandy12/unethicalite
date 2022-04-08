@@ -10,6 +10,8 @@
           <set>
             <option value="$PROJECT_DIR$/../plugins" />
             <option value="$PROJECT_DIR$/../plugins/buildSrc" />
+            <option value="$PROJECT_DIR$/../plugins/dcmagic" />
+            <option value="$PROJECT_DIR$/../plugins/dcmining" />
             <option value="$PROJECT_DIR$/../plugins/hoot-aerialfishing" />
             <option value="$PROJECT_DIR$/../plugins/hoot-agility" />
             <option value="$PROJECT_DIR$/../plugins/hoot-autologin" />
@@ -23,7 +25,6 @@
             <option value="$PROJECT_DIR$/../plugins/hoot-tempoross" />
             <option value="$PROJECT_DIR$/../plugins/hoot-trawler" />
             <option value="$PROJECT_DIR$/../plugins/interaction-tester" />
-            <option value="$PROJECT_DIR$/../plugins/slayer" />
           </set>
         </option>
       </GradleProjectSettings>
