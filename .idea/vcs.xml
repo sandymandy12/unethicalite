@@ -2,6 +2,7 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/runelite-client/src/main/java/net/runelite/client/plugins/deecat" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/runelite-client/src/main/java/net/runelite/client/plugins/openosrs-plugins" vcs="Git" />
   </component>
 </project>

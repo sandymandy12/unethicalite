@@ -5,68 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a77247c6-fcb0-4377-9637-d53e46c38948" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../plugins/dcmagic/dcmagic.gradle.kts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../plugins/dcmagic/src/main/java/dev/hoot/dcmagic/BlastOff.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../plugins/dcmagic/src/main/java/dev/hoot/dcmagic/DCMagicConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../plugins/dcmagic/src/main/java/dev/hoot/dcmagic/DCMagicPlugin.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../plugins/dcmagic/src/main/java/dev/hoot/dcmagic/VirtualKeyboard.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runelite-client/src/main/java/net/runelite/client/plugins/deecat/Actions.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runelite-client/src/main/java/net/runelite/client/plugins/deecat/Food.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runelite-client/src/main/java/net/runelite/client/plugins/deecat/FountainTrail.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runelite-client/src/main/java/net/runelite/client/plugins/deecat/Gui.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runelite-client/src/main/java/net/runelite/client/plugins/deecat/MyItems.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runelite-client/src/main/java/net/runelite/client/plugins/deecat/Obelisk.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runelite-client/src/main/java/net/runelite/client/plugins/deecat/SquareOverlay.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runelite-client/src/main/java/net/runelite/client/plugins/deecat/Teleport" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runelite-client/src/main/java/net/runelite/client/plugins/deecat/Teleport.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runelite-client/src/main/java/net/runelite/client/plugins/deecat/Utility.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runelite-client/src/main/java/net/runelite/client/plugins/deecat/VirtualKeyboard.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runelite-client/src/main/java/net/runelite/client/plugins/deecat/dcgrounditems/DCGroundItemInputListener.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runelite-client/src/main/java/net/runelite/client/plugins/deecat/dcgrounditems/DCGroundItemsConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runelite-client/src/main/java/net/runelite/client/plugins/deecat/dcgrounditems/DCGroundItemsOverlay.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runelite-client/src/main/java/net/runelite/client/plugins/deecat/dcgrounditems/DCGroundItemsPlugin.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runelite-client/src/main/java/net/runelite/client/plugins/deecat/dcgrounditems/DCItemThreshold.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runelite-client/src/main/java/net/runelite/client/plugins/deecat/dcgrounditems/DCLootType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runelite-client/src/main/java/net/runelite/client/plugins/deecat/dcgrounditems/DCMenuEntryWithCount.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runelite-client/src/main/java/net/runelite/client/plugins/deecat/dcgrounditems/DCNamedQuantity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runelite-client/src/main/java/net/runelite/client/plugins/deecat/dcgrounditems/DCWildcardMatchLoader.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runelite-client/src/main/java/net/runelite/client/plugins/deecat/dcgrounditems/GroundItem.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runelite-client/src/main/java/net/runelite/client/plugins/deecat/dcgrounditems/config/DespawnTimerMode.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runelite-client/src/main/java/net/runelite/client/plugins/deecat/dcgrounditems/config/HighlightTier.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runelite-client/src/main/java/net/runelite/client/plugins/deecat/dcgrounditems/config/ItemHighlightMode.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runelite-client/src/main/java/net/runelite/client/plugins/deecat/dcgrounditems/config/MenuHighlightMode.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runelite-client/src/main/java/net/runelite/client/plugins/deecat/dcgrounditems/config/PriceDisplayMode.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runelite-client/src/main/java/net/runelite/client/plugins/deecat/dcgrounditems/config/ValueCalculationMode.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runelite-client/src/main/java/net/runelite/client/plugins/deecat/dcnpchighlight/DCNpcIndicatorsConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runelite-client/src/main/java/net/runelite/client/plugins/deecat/dcnpchighlight/DCNpcIndicatorsPlugin.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runelite-client/src/main/java/net/runelite/client/plugins/deecat/dcnpchighlight/DCNpcSceneOverlay.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runelite-client/src/main/java/net/runelite/client/plugins/deecat/dcnpchighlight/MemorizedNpc.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runelite-client/src/main/java/net/runelite/client/plugins/deecat/dcnpchighlight/NpcMinimapOverlay.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runelite-client/src/main/java/net/runelite/client/plugins/deecat/dcobjectindicators/ColorTileObject.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runelite-client/src/main/java/net/runelite/client/plugins/deecat/dcobjectindicators/DCObjectIndicatorsConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runelite-client/src/main/java/net/runelite/client/plugins/deecat/dcobjectindicators/DCObjectIndicatorsOverlay.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runelite-client/src/main/java/net/runelite/client/plugins/deecat/dcobjectindicators/DCObjectIndicatorsPlugin.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runelite-client/src/main/java/net/runelite/client/plugins/deecat/dcobjectindicators/ObjectPoint.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runelite-client/src/main/java/net/runelite/client/plugins/deecat/dcplayerindicators/DCPlayerIndicatorsConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runelite-client/src/main/java/net/runelite/client/plugins/deecat/dcplayerindicators/DCPlayerIndicatorsMinimapOverlay.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runelite-client/src/main/java/net/runelite/client/plugins/deecat/dcplayerindicators/DCPlayerIndicatorsOverlay.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runelite-client/src/main/java/net/runelite/client/plugins/deecat/dcplayerindicators/DCPlayerIndicatorsPlugin.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runelite-client/src/main/java/net/runelite/client/plugins/deecat/dcplayerindicators/DCPlayerIndicatorsService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runelite-client/src/main/java/net/runelite/client/plugins/deecat/dcplayerindicators/DCPlayerIndicatorsTileOverlay.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runelite-client/src/main/java/net/runelite/client/plugins/deecat/dcplayerindicators/DCPlayerNameLocation.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runelite-client/src/main/java/net/runelite/client/plugins/deecat/externals/utils/ExtUtils.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runelite-client/src/main/java/net/runelite/client/plugins/deecat/externals/utils/PrayerMap.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runelite-client/src/main/java/net/runelite/client/plugins/deecat/externals/utils/Spells.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runelite-client/src/main/java/net/runelite/client/plugins/deecat/externals/utils/Tab.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runelite-client/src/main/java/net/runelite/client/plugins/deecat/menuEntrySwapper" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runelite-client/src/main/java/net/runelite/client/plugins/deecat/slayer/BlastOff.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runelite-client/src/main/java/net/runelite/client/plugins/deecat/slayer/DCSlayerConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runelite-client/src/main/java/net/runelite/client/plugins/deecat/slayer/DCSlayerOverlay.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runelite-client/src/main/java/net/runelite/client/plugins/deecat/slayer/DCSlayerPlugin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../plugins/hoot-fighter/src/main/java/dev/hoot/fighter/HootFighterConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../plugins/hoot-fighter/src/main/java/dev/hoot/fighter/HootFighterConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../plugins/hoot-fighter/src/main/java/dev/hoot/fighter/HootFighterPlugin.java" beforeDir="false" afterPath="$PROJECT_DIR$/../plugins/hoot-fighter/src/main/java/dev/hoot/fighter/HootFighterPlugin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../plugins/scripts/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/../plugins/scripts/constants.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../plugins/scripts/createplugin.py" beforeDir="false" afterPath="$PROJECT_DIR$/../plugins/scripts/createplugin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../plugins/oprs-plugins" beforeDir="false" afterPath="$PROJECT_DIR$/../plugins/oprs-plugins" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
@@ -106,11 +45,6 @@
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="unethicalite-plugins" type="f1a62948:ProjectNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="unethicalite-plugins" type="f1a62948:ProjectNode" />
-                <item name="hoot-aerialfishing" type="2d1252cf:ModuleNode" />
               </path>
             </expand>
             <select />
@@ -160,8 +94,16 @@
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\eurostep\IdeaProjects\plugins\dcmagic\src\main\java\dev\hoot\dcmagic" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\eurostep\IdeaProjects\plugins\" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="dev.hoot.dcslayer" />
+      <recent name="dev.hoot.fighter" />
+      <recent name="dev.hoot.slayer" />
+    </key>
   </component>
-  <component name="RunManager" selected="Gradle.plugins [build]">
+  <component name="RunManager" selected="Gradle.client [build]">
     <list>
       <item itemvalue="Gradle.client [build]" />
       <item itemvalue="Gradle.plugins [build]" />
@@ -212,7 +154,7 @@
         <option value="unethicalite.runelite-client.main_Provided" />
       </set>
     </module>
-    <module name="unethicalite-plugins.dcmining.main">
+    <module name="unethicalite-plugins.dcslayer.main">
       <set>
         <option value="unethicalite.runelite-api.main_Provided" />
         <option value="unethicalite.runelite-client.main_Provided" />

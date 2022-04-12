@@ -11,7 +11,7 @@
             <option value="$PROJECT_DIR$/../plugins" />
             <option value="$PROJECT_DIR$/../plugins/buildSrc" />
             <option value="$PROJECT_DIR$/../plugins/dcmagic" />
-            <option value="$PROJECT_DIR$/../plugins/dcmining" />
+            <option value="$PROJECT_DIR$/../plugins/dcslayer" />
             <option value="$PROJECT_DIR$/../plugins/hoot-aerialfishing" />
             <option value="$PROJECT_DIR$/../plugins/hoot-agility" />
             <option value="$PROJECT_DIR$/../plugins/hoot-autologin" />

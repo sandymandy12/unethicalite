@@ -10,21 +10,30 @@
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.slf4j/slf4j-api/1.7.25/da76ca59f6a57ee3102f8f9bd9cee742973efa8a/slf4j-api-1.7.25.jar" />
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.zafarkhaja/java-semver/0.9.0/59a83ca73c72a5e25b3f0b1bb305230a11000329/java-semver-0.9.0.jar" />
         </processorPath>
-        <module name="unethicalite-plugins.dcmining.main" />
-        <module name="unethicalite-plugins.hoot-tempoross.main" />
-        <module name="unethicalite-plugins.hoot-pickpocket.main" />
-        <module name="unethicalite-plugins.hoot-autologin.main" />
-        <module name="unethicalite-plugins.interaction-tester.main" />
-        <module name="unethicalite-plugins.hoot-agility.main" />
-        <module name="unethicalite-plugins.hoot-notifier.main" />
-        <module name="unethicalite-plugins.hoot-butler.main" />
-        <module name="unethicalite-plugins.hoot-aerialfishing.main" />
-        <module name="unethicalite-plugins.hoot-trawler.main" />
-        <module name="unethicalite-plugins.hoot-oneclick.main" />
-        <module name="unethicalite-plugins.hoot-blackjack.main" />
-        <module name="unethicalite-plugins.hoot-fighter.main" />
-        <module name="unethicalite-plugins.hoot-chins.main" />
-        <module name="unethicalite-plugins.dcmagic.main" />
+        <module name="unethicalite.runelite-client.main" />
+      </profile>
+      <profile name="Gradle Imported" enabled="true">
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.20/18bcea7d5df4d49227b4a0743a536208ce4825bb/lombok-1.18.20.jar" />
+        </processorPath>
+        <module name="unethicalite.cache.main" />
+        <module name="unethicalite.injector.test" />
+        <module name="unethicalite.deobfuscator.main" />
+        <module name="unethicalite.runelite-api.main" />
+        <module name="unethicalite.wiki-scraper.main" />
+        <module name="unethicalite.cache.test" />
+        <module name="unethicalite.http-api.main" />
+        <module name="unethicalite.injector.main" />
+        <module name="unethicalite.runelite-client.test" />
+        <module name="unethicalite.runelite-jshell.main" />
+      </profile>
+      <profile name="Gradle Imported" enabled="true">
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.sisu/org.eclipse.sisu.inject/0.3.4/fc3be144183f54dc6f5c55e34462c1c2d89d7d96/org.eclipse.sisu.inject-0.3.4.jar" />
+        </processorPath>
+        <module name="unethicalite.runelite-script-assembler-plugin.main" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="1.8">
@@ -35,6 +44,8 @@
       <module name="unethicalite-plugins.dc-playerindicator.main" target="11" />
       <module name="unethicalite-plugins.dc-playerindicator.test" target="11" />
       <module name="unethicalite-plugins.dcmining" target="11" />
+      <module name="unethicalite-plugins.dcmining.main" target="11" />
+      <module name="unethicalite-plugins.dcmining.test" target="11" />
       <module name="unethicalite-plugins.dcplayerindicator" target="11" />
       <module name="unethicalite-plugins.dcplayerindicator.main" target="11" />
       <module name="unethicalite-plugins.dcplayerindicator.test" target="11" />
