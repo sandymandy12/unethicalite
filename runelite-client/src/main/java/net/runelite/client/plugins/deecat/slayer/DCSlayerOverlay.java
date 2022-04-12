@@ -54,9 +54,14 @@ class DCSlayerOverlay extends OverlayPanel
                         .color(Color.yellow)
                         .build());
             }
-            else {
+            else if (wildyLevel != 0) {
                 panelComponent.getChildren().add(TitleComponent.builder()
-                        .text(maxCombatLevel + " - " + minCombatLevel)
+                        .text(minCombatLevel + " - " + maxCombatLevel)
+                        .color(Color.cyan)
+                        .build());
+            } else {
+                panelComponent.getChildren().add(TitleComponent.builder()
+                        .text("Coast is clear")
                         .color(Color.cyan)
                         .build());
             }
