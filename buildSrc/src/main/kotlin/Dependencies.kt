@@ -24,19 +24,19 @@
  */
 
 object ProjectVersions {
-    const val launcherVersion = "2.2.0"
-    const val rlVersion = "1.8.16"
+    const val launcherVersion = "3.0.0"
+    const val rlVersion = "1.8.18.4"
 
-    const val openosrsVersion = "4.22.0"
+    const val openosrsVersion = "4.25.2-SNAPSHOT"
 
-    const val rsversion = 204
+    const val rsversion = 204.6
     const val cacheversion = 165
 
     const val lombokVersion = "1.18.20"
 }
 
 object Unethicalite {
-    fun isBotBuild(): Boolean {
-        return System.getenv("unethicalite.build")?.equals("bot") ?: false
+    fun isMinimalBuild(): Boolean {
+        return System.getenv("unethicalite.build")?.equals("minimal") ?: false
     }
 }

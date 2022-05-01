@@ -1,4 +1,4 @@
 import net.runelite.mapping.ObfuscatedName;
 
-@ObfuscatedName("if")
+@ObfuscatedName("is")
 public interface class252 extends Iterable {}
