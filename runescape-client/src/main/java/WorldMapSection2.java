@@ -4,98 +4,104 @@ import net.runelite.mapping.ObfuscatedGetter;
 import net.runelite.mapping.ObfuscatedName;
 import net.runelite.mapping.ObfuscatedSignature;
 
-@ObfuscatedName("hb")
+@ObfuscatedName("ga")
 @Implements("WorldMapSection2")
 public class WorldMapSection2 implements WorldMapSection {
+	@ObfuscatedName("w")
+	@ObfuscatedSignature(descriptor = 
+	"Lqq;")
+
+	@Export("options_buttons_0Sprite")
+	static IndexedSprite options_buttons_0Sprite;
 	@ObfuscatedName("v")
 	@ObfuscatedGetter(intValue = 
-	-609118689)
+	-2086357139)
 
 	@Export("minPlane")
 	int minPlane;
-	@ObfuscatedName("o")
+	@ObfuscatedName("c")
 	@ObfuscatedGetter(intValue = 
-	-922097575)
+	891943535)
 
 	@Export("planes")
 	int planes;
-	@ObfuscatedName("h")
+	@ObfuscatedName("i")
 	@ObfuscatedGetter(intValue = 
-	-962629091)
+	72025167)
 
 	@Export("regionStartX")
 	int regionStartX;
-	@ObfuscatedName("g")
+	@ObfuscatedName("f")
 	@ObfuscatedGetter(intValue = 
-	487814859)
+	456925677)
 
 	@Export("regionStartY")
 	int regionStartY;
-	@ObfuscatedName("l")
+	@ObfuscatedName("b")
 	@ObfuscatedGetter(intValue = 
-	-820840621)
+	620959139)
 
 	@Export("regionEndX")
 	int regionEndX;
 	@ObfuscatedName("n")
 	@ObfuscatedGetter(intValue = 
-	1924618585)
+	-1044341743)
 
 	@Export("regionEndY")
 	int regionEndY;
-	@ObfuscatedName("d")
+	@ObfuscatedName("s")
 	@ObfuscatedGetter(intValue = 
-	-1193578549)
+	1229812531)
 
-	int field2670;
-	@ObfuscatedName("f")
+	int field2233;
+	@ObfuscatedName("l")
 	@ObfuscatedGetter(intValue = 
-	1466637361)
+	-1125733411)
 
-	int field2674;
-	@ObfuscatedName("u")
+	int field2234;
+	@ObfuscatedName("q")
 	@ObfuscatedGetter(intValue = 
-	-7961391)
+	-1336777703)
 
-	int field2678;
-	@ObfuscatedName("r")
+	int field2230;
+	@ObfuscatedName("o")
 	@ObfuscatedGetter(intValue = 
-	311755747)
+	-980729145)
 
-	int field2679;
+	int field2232;
 
 	WorldMapSection2() {
 	}
 
 	@ObfuscatedName("v")
 	@ObfuscatedSignature(descriptor = 
-	"(Lhw;I)V", garbageValue = 
-	"-1521793701")
+	"(Lgu;I)V", garbageValue = 
+	"964088357")
 
 	@Export("expandBounds")
 	public void expandBounds(WorldMapArea var1) {
-		if (var1.regionLowX > this.field2670) {
-			var1.regionLowX = this.field2670;
+		if (var1.regionLowX > this.field2233) {
+			var1.regionLowX = this.field2233;
 		}
 
-		if (var1.regionHighX < this.field2678) {
-			var1.regionHighX = this.field2678;
+		if (var1.regionHighX < this.field2230) {
+			var1.regionHighX = this.field2230;
 		}
 
-		if (var1.regionLowY > this.field2674) {
-			var1.regionLowY = this.field2674;
+		if (var1.regionLowY > this.field2234) {
+			var1.regionLowY = this.field2234;
 		}
 
-		if (var1.regionHighY < this.field2679) {
-			var1.regionHighY = this.field2679;
+		if (var1.regionHighY < this.field2232) {
+			var1.regionHighY = this.field2232;
 		}
 
 	}
 
-	@ObfuscatedName("o")
+	@ObfuscatedName("c")
 	@ObfuscatedSignature(descriptor = 
 	"(IIII)Z", garbageValue = 
-	"-2091891709")
+	"-1337137401")
 
 	@Export("containsCoord")
 	public boolean containsCoord(int var1, int var2, int var3) {
@@ -106,51 +112,51 @@ public class WorldMapSection2 implements WorldMapSection {
 		}
 	}
 
-	@ObfuscatedName("h")
+	@ObfuscatedName("i")
 	@ObfuscatedSignature(descriptor = 
-	"(IIB)Z", garbageValue = 
-	"-59")
+	"(III)Z", garbageValue = 
+	"1769831605")
 
 	@Export("containsPosition")
 	public boolean containsPosition(int var1, int var2) {
-		return ((((var1 >> 6) >= this.field2670) && ((var1 >> 6) <= this.field2678)) && ((var2 >> 6) >= this.field2674)) && ((var2 >> 6) <= this.field2679);
+		return ((((var1 >> 6) >= this.field2233) && ((var1 >> 6) <= this.field2230)) && ((var2 >> 6) >= this.field2234)) && ((var2 >> 6) <= this.field2232);
 	}
 
-	@ObfuscatedName("g")
+	@ObfuscatedName("f")
 	@ObfuscatedSignature(descriptor = 
 	"(IIII)[I", garbageValue = 
-	"-604533765")
+	"1941144122")
 
 	@Export("getBorderTileLengths")
 	public int[] getBorderTileLengths(int var1, int var2, int var3) {
 		if (!this.containsCoord(var1, var2, var3)) {
 			return null;
 		} else {
-			int[] var4 = new int[]{ var2 + ((this.field2670 * 64) - (this.regionStartX * 64)), var3 + ((this.field2674 * 64) - (this.regionStartY * 64)) };
+			int[] var4 = new int[]{ var2 + ((this.field2233 * 64) - (this.regionStartX * 64)), var3 + ((this.field2234 * 64) - (this.regionStartY * 64)) };
 			return var4;
 		}
 	}
 
-	@ObfuscatedName("l")
+	@ObfuscatedName("b")
 	@ObfuscatedSignature(descriptor = 
-	"(III)Lko;", garbageValue = 
-	"-41254697")
+	"(III)Lks;", garbageValue = 
+	"-670243838")
 
 	@Export("coord")
 	public Coord coord(int var1, int var2) {
 		if (!this.containsPosition(var1, var2)) {
 			return null;
 		} else {
-			int var3 = ((this.regionStartX * 64) - (this.field2670 * 64)) + var1;
-			int var4 = var2 + ((this.regionStartY * 64) - (this.field2674 * 64));
+			int var3 = ((this.regionStartX * 64) - (this.field2233 * 64)) + var1;
+			int var4 = var2 + ((this.regionStartY * 64) - (this.field2234 * 64));
 			return new Coord(this.minPlane, var3, var4);
 		}
 	}
 
 	@ObfuscatedName("n")
 	@ObfuscatedSignature(descriptor = 
-	"(Lpd;B)V", garbageValue = 
-	"119")
+	"(Lpi;I)V", garbageValue = 
+	"-860121653")
 
 	@Export("read")
 	public void read(Buffer var1) {
@@ -160,17 +166,17 @@ public class WorldMapSection2 implements WorldMapSection {
 		this.regionStartY = var1.readUnsignedShort();
 		this.regionEndX = var1.readUnsignedShort();
 		this.regionEndY = var1.readUnsignedShort();
-		this.field2670 = var1.readUnsignedShort();
-		this.field2674 = var1.readUnsignedShort();
-		this.field2678 = var1.readUnsignedShort();
-		this.field2679 = var1.readUnsignedShort();
+		this.field2233 = var1.readUnsignedShort();
+		this.field2234 = var1.readUnsignedShort();
+		this.field2230 = var1.readUnsignedShort();
+		this.field2232 = var1.readUnsignedShort();
 		this.postRead();
 	}
 
-	@ObfuscatedName("d")
+	@ObfuscatedName("s")
 	@ObfuscatedSignature(descriptor = 
-	"(I)V", garbageValue = 
-	"1066929614")
+	"(S)V", garbageValue = 
+	"255")
 
 	@Export("postRead")
 	void postRead() {
@@ -178,37 +184,30 @@ public class WorldMapSection2 implements WorldMapSection {
 
 	@ObfuscatedName("v")
 	@ObfuscatedSignature(descriptor = 
-	"(Llq;IIIZI)V", garbageValue = 
-	"1018081729")
+	"(B)V", garbageValue = 
+	"-16")
 
-	public static void method4561(AbstractArchive var0, int var1, int var2, int var3, boolean var4) {
-		class273.musicPlayerStatus = 1;
-		class147.musicTrackArchive = var0;
-		ArchiveLoader.musicTrackGroupId = var1;
-		class273.musicTrackFileId = var2;
-		DevicePcmPlayerProvider.musicTrackVolume = var3;
-		class260.musicTrackBoolean = var4;
-		class273.pcmSampleLength = 10000;
-	}
+	static void method3959() {
+		class326.field4041 = new int[2000];
+		int var0 = 0;
+		int var1 = 240;
 
-	@ObfuscatedName("h")
-	@ObfuscatedSignature(descriptor = 
-	"(II)I", garbageValue = 
-	"2085345947")
+		int var3;
+		for (byte var2 = 12; var0 < 16; var1 -= var2) {
+			var3 = class163.method3320(((double) (((float) (var1)) / 360.0F)), 0.9998999834060669, ((double) (0.075F + ((0.425F * ((float) (var0))) / 16.0F))));
+			class326.field4041[var0] = var3;
+			++var0;
+		}
 
-	@Export("Widget_unpackTargetMask")
-	public static int Widget_unpackTargetMask(int var0) {
-		return (var0 >> 11) & 63;
-	}
+		var1 = 48;
 
-	@ObfuscatedName("lg")
-	@ObfuscatedSignature(descriptor = 
-	"(Lkn;I)I", garbageValue = 
-	"-1150366457")
+		for (int var5 = var1 / 6; var0 < class326.field4041.length; var1 -= var5) {
+			var3 = var0 * 2;
 
-	@Export("getWidgetFlags")
-	static int getWidgetFlags(Widget var0) {
-		IntegerNode var1 = ((IntegerNode) (Client.widgetFlags.get((((long) (var0.id)) << 32) + ((long) (var0.childIndex)))));
-		return var1 != null ? var1.integer : var0.flags;
+			for (int var4 = class163.method3320(((double) (((float) (var1)) / 360.0F)), 0.9998999834060669, 0.5); (var0 < var3) && (var0 < class326.field4041.length); ++var0) {
+				class326.field4041[var0] = var4;
+			}
+		}
+
 	}
 }

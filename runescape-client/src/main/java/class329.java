@@ -1,9 +1,18 @@
 import java.util.HashMap;
+import net.runelite.mapping.Export;
+import net.runelite.mapping.ObfuscatedGetter;
 import net.runelite.mapping.ObfuscatedName;
 
-@ObfuscatedName("lr")
+@ObfuscatedName("lm")
 public class class329 {
-	static {
+	@ObfuscatedName("fa")
+	@ObfuscatedGetter(intValue = 
+	1869767523)
+
+	@Export("currentPort")
+	static int currentPort;
+	static 
+	{
 		new HashMap();
 	}
 }

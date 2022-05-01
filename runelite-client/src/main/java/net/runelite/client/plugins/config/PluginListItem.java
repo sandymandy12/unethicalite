@@ -189,6 +189,12 @@ class PluginListItem extends JPanel implements SearchablePlugin
 							{
 								return oprsExternalPluginManager.reloadStart(pluginId);
 							}
+
+							@Override
+							protected void done()
+							{
+								pluginListPanel.rebuildPluginList();
+							}
 						}.execute();
 					}
 				}.execute();
@@ -236,7 +242,7 @@ class PluginListItem extends JPanel implements SearchablePlugin
 		buttonPanel.add(onOffToggle);
 		if (pluginConfig.getPlugin() != null)
 		{
-			onOffToggle.addItemListener(i ->
+			onOffToggle.addActionListener(i ->
 			{
 				if (onOffToggle.isSelected())
 				{

@@ -1,6 +1,6 @@
 package net.runelite.rs.api;
 
-import dev.hoot.api.MouseHandler;
+import dev.unethicalite.api.MouseHandler;
 import net.runelite.mapping.Import;
 
 public interface RSMouseHandler extends MouseHandler
@@ -52,7 +52,7 @@ public interface RSMouseHandler extends MouseHandler
 
 	@Import("MouseHandler_lastMovedVolatile")
 	@Override
-	void setCurrentMillis(long millis);
+	void setLastMovedMillis(long millis);
 
 	@Import("MouseHandler_currentButtonVolatile")
 	@Override
@@ -77,4 +77,8 @@ public interface RSMouseHandler extends MouseHandler
 	@Import("MouseHandler_lastPressedTimeMillisVolatile")
 	@Override
 	void setLastPressedMillis(long millis);
+
+	@Import("MouseHandler_lastButtonVolatile")
+	@Override
+	int getLastPendingButton();
 }

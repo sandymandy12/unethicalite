@@ -100,7 +100,7 @@ subprojects {
     }
 
     apply<JavaLibraryPlugin>()
-    //apply<MavenPublishPlugin>()
+    apply<MavenPublishPlugin>()
 
     project.extra["gitCommit"] = localGitCommit
     project.extra["rootPath"] = rootDir.toString().replace("\\", "/")
@@ -123,7 +123,7 @@ subprojects {
             }
             if (System.getenv("REPO_URL") != null) {
                 maven {
-                    url = uri(System.getenv("REPO_URL"))
+                     url = uri(System.getenv("REPO_URL"))
                     credentials {
                         username = System.getenv("REPO_USERNAME")
                         password = System.getenv("REPO_PASSWORD")
@@ -205,6 +205,6 @@ tasks {
 
         classpath = project(":runelite-client").sourceSets.main.get().runtimeClasspath
         enableAssertions = true
-        mainClass.set(if (Unethicalite.isBotBuild()) "dev.hoot.bot.Bot" else "net.runelite.client.RuneLite")
+        mainClass.set(if (Unethicalite.isMinimalBuild()) "dev.unethicalite.client.MinimalClient" else "net.runelite.client.RuneLite")
     }
 }
