@@ -595,6 +595,7 @@ public class WorldHopperPlugin extends Plugin
 		}
 		else
 		{
+
 			hop(world.getId());
 		}
 	}
