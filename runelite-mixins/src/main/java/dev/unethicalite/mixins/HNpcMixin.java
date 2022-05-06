@@ -46,10 +46,21 @@ public abstract class HNpcMixin implements RSNPC
 
 	@Inject
 	@Override
-	public String[] getRawActions()
+	public String[] getActions()
 	{
 		RSNPCComposition composition = getTransformedComposition();
-		return composition == null ? null : composition.getActions();
+		if (composition == null)
+		{
+			return null;
+		}
+
+		String[] sanitized = new String[composition.getActions().length];
+		for (int i = 0; i < composition.getActions().length; i++)
+		{
+			sanitized[i] = Text.standardize(composition.getActions()[i]);
+		}
+
+		return sanitized;
 	}
 
 	@Override
