@@ -1,6 +1,6 @@
 package dev.unethicalite.api.items;
 
-import dev.unethicalite.managers.Static;
+import dev.unethicalite.client.Static;
 import net.runelite.api.InventoryID;
 import net.runelite.api.Item;
 import net.runelite.api.ItemContainer;
@@ -28,7 +28,11 @@ public class Inventory extends Items
 			return items;
 		}
 
-		for (Item item : container.getItems())
+		Item[] containerItems = container.getItems();
+
+		cacheUncachedItems(containerItems);
+
+		for (Item item : containerItems)
 		{
 			if (item.getId() != -1 && item.getName() != null && !item.getName().equals("null"))
 			{

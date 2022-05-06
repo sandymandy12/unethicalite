@@ -56,9 +56,9 @@ import javax.inject.Singleton;
 
 import dev.unethicalite.api.movement.pathfinder.GlobalCollisionMap;
 import dev.unethicalite.api.movement.pathfinder.Walker;
-import dev.unethicalite.client.config.MinimalConfig;
-import dev.unethicalite.client.config.UnethicaliteProperties;
-import dev.unethicalite.managers.Static;
+import dev.unethicalite.client.minimal.config.MinimalConfig;
+import dev.unethicalite.client.minimal.config.UnethicaliteProperties;
+import dev.unethicalite.client.Static;
 import dev.unethicalite.managers.interaction.InteractionConfig;
 import lombok.AllArgsConstructor;
 import net.runelite.api.Client;
