@@ -1,8 +1,8 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="plugins [build]" type="GradleRunConfiguration" factoryName="Gradle">
+  <configuration default="false" name="bots [build]" type="GradleRunConfiguration" factoryName="Gradle">
     <ExternalSystemSettings>
       <option name="executionName" />
-      <option name="externalProjectPath" value="$PROJECT_DIR$/../plugins" />
+      <option name="externalProjectPath" value="$PROJECT_DIR$/../bots" />
       <option name="externalSystemIdString" value="GRADLE" />
       <option name="scriptParameters" value="-x test -x checkstyleMain -PreleaseToExternalmanager=all" />
       <option name="taskDescriptions">
