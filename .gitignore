@@ -5,6 +5,8 @@ nb-configuration.xml
 project.properties
 *.iml
 
+.idea/*
+!.idea/runConfigurations
 .project
 .settings/
 .classpath
@@ -45,6 +47,7 @@ Icon
 .Trashes
 .VolumeIcon.icns
 .com.apple.timemachine.donotpresent
+
 
 # Directories potentially created on remote AFP share
 .AppleDB
