@@ -1,9 +1,9 @@
 package dev.unethicalite.api.script.paint;
 
 import dev.unethicalite.client.devtools.EntityRenderer;
+import dev.unethicalite.client.config.UnethicaliteConfig;
 import dev.unethicalite.managers.InputManager;
 import dev.unethicalite.managers.MinimalPluginManager;
-import dev.unethicalite.managers.interaction.InteractionConfig;
 import net.runelite.api.Point;
 import net.runelite.client.ui.overlay.Overlay;
 import net.runelite.client.ui.overlay.OverlayLayer;
@@ -33,7 +33,7 @@ public class Paint extends Overlay
 	private EntityRenderer entityRenderer;
 
 	@Inject
-	private InteractionConfig interactionConfig;
+	private UnethicaliteConfig interactionConfig;
 
 	@Inject
 	private InputManager inputManager;
@@ -55,7 +55,7 @@ public class Paint extends Overlay
 	{
 		Font font = g.getFont();
 
-		if (Objects.equals("minimal", System.getProperty("unethicalite.build")))
+		if (Objects.equals("minimal", System.getenv("unethicalite.build")))
 		{
 			if (interactionConfig.drawMouse())
 			{

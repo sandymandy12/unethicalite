@@ -1,25 +1,35 @@
 package dev.unethicalite.managers;
 
+import com.github.kwhat.jnativehook.GlobalScreen;
+import com.github.kwhat.jnativehook.NativeHookException;
+import com.github.kwhat.jnativehook.mouse.NativeMouseEvent;
+import com.github.kwhat.jnativehook.mouse.NativeMouseInputListener;
 import dev.unethicalite.api.events.MouseAutomated;
-import dev.unethicalite.managers.interaction.InteractionConfig;
+import dev.unethicalite.api.events.NativeMouseInput;
+import dev.unethicalite.client.config.UnethicaliteConfig;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import net.runelite.api.Client;
 import net.runelite.client.eventbus.EventBus;
 import net.runelite.client.eventbus.Subscribe;
+import net.runelite.client.events.ConfigChanged;
 import net.runelite.client.input.MouseListener;
 import net.runelite.client.input.MouseManager;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.awt.event.MouseEvent;
+import java.util.Objects;
+import java.util.logging.Logger;
 
 @Singleton
 @Slf4j
-public class InputManager implements MouseListener
+public class InputManager implements MouseListener, NativeMouseInputListener
 {
+	private final Client client;
 	private final MinimalPluginManager minimalPluginManager;
 	private final LoopedPluginManager loopedPluginManager;
-	private final InteractionConfig interactionConfig;
+	private final UnethicaliteConfig interactionConfig;
 
 	@Getter
 	private int lastClickX = -1;
@@ -35,13 +45,19 @@ public class InputManager implements MouseListener
 			MinimalPluginManager minimalPluginManager,
 			LoopedPluginManager loopedPluginManager,
 			MouseManager manager,
-			EventBus eventBus, InteractionConfig interactionConfig)
+			EventBus eventBus,
+			Client client,
+			UnethicaliteConfig interactionConfig
+	) throws NativeHookException
 	{
 		this.minimalPluginManager = minimalPluginManager;
 		this.loopedPluginManager = loopedPluginManager;
+		this.client = client;
 		this.interactionConfig = interactionConfig;
 		eventBus.register(this);
 		manager.registerMouseListener(this);
+		GlobalScreen.registerNativeHook();
+		Logger.getLogger(GlobalScreen.class.getPackage().getName()).setLevel(java.util.logging.Level.OFF);
 	}
 
 	@Override
@@ -114,6 +130,75 @@ public class InputManager implements MouseListener
 			case MOVE:
 				setLastMove(event.getX(), event.getY());
 				break;
+		}
+	}
+
+	@Override
+	public void nativeMouseClicked(NativeMouseEvent nativeEvent)
+	{
+		client.getCallbacks().post(new NativeMouseInput(
+				nativeEvent.getX(),
+				nativeEvent.getY(),
+				nativeEvent.getButton(),
+				NativeMouseInput.Type.CLICK
+		));
+	}
+
+	@Override
+	public void nativeMousePressed(NativeMouseEvent nativeEvent)
+	{
+		client.getCallbacks().post(new NativeMouseInput(
+				nativeEvent.getX(),
+				nativeEvent.getY(),
+				nativeEvent.getButton(),
+				NativeMouseInput.Type.PRESS
+		));
+	}
+
+	@Override
+	public void nativeMouseReleased(NativeMouseEvent nativeEvent)
+	{
+		client.getCallbacks().post(new NativeMouseInput(
+				nativeEvent.getX(),
+				nativeEvent.getY(),
+				nativeEvent.getButton(),
+				NativeMouseInput.Type.RELEASE
+		));
+	}
+
+	@Override
+	public void nativeMouseMoved(NativeMouseEvent nativeEvent)
+	{
+		client.getCallbacks().post(new NativeMouseInput(
+				nativeEvent.getX(),
+				nativeEvent.getY(),
+				nativeEvent.getButton(),
+				NativeMouseInput.Type.MOVEMENT
+		));
+	}
+
+	@Subscribe
+	private void onConfigChanged(ConfigChanged event)
+	{
+		if (!event.getGroup().equals("unethicalite"))
+		{
+			return;
+		}
+
+		if (!event.getKey().equals("interactMethod"))
+		{
+			return;
+		}
+
+		if (Objects.equals(event.getNewValue(), "MOUSE_FORWARDING"))
+		{
+			GlobalScreen.addNativeMouseListener(this);
+			GlobalScreen.addNativeMouseMotionListener(this);
+		}
+		else if (Objects.equals(event.getOldValue(), "MOUSE_FORWARDING"))
+		{
+			GlobalScreen.removeNativeMouseListener(this);
+			GlobalScreen.removeNativeMouseMotionListener(this);
 		}
 	}
 
