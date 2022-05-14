@@ -30,6 +30,7 @@ public interface UnethicaliteConfig extends Config
 	{
 		return InteractMethod.MOUSE_EVENTS;
 	}
+
 	@ConfigItem(
 			keyName = "forceForwarding",
 			name = "Force mouse forwarding",
@@ -46,11 +47,29 @@ public interface UnethicaliteConfig extends Config
 	}
 
 	@ConfigItem(
+			keyName = "forwardLeftClick",
+			name = "Forward all clicks as left click",
+			description = "Converts all clicks to left mouse button and forwards them as a left click",
+			section = interactionManager,
+			position = 2,
+			hidden = true,
+			unhide = "interactMethod",
+			unhideValue = "MOUSE_FORWARDING"
+	)
+	default boolean forwardLeftClick()
+	{
+		return false;
+	}
+
+	@ConfigItem(
 			keyName = "naturalMouse",
 			name = "Natural mouse",
 			description = "Uses the 'natural mouse' algorithm to move and click",
 			section = interactionManager,
-			position = 2
+			position = 3,
+			hidden = true,
+			unhide = "interactMethod",
+			unhideValue = "MOUSE_EVENTS"
 	)
 	default boolean naturalMouse()
 	{
@@ -62,7 +81,7 @@ public interface UnethicaliteConfig extends Config
 			name = "Disable manual input",
 			description = "Disables manual input if a script/looped plugin is running",
 			section = interactionManager,
-			position = 3
+			position = 4
 	)
 	default boolean disableMouse()
 	{
@@ -74,7 +93,10 @@ public interface UnethicaliteConfig extends Config
 			name = "Mouse behavior",
 			description = "Type of clicks to send to the server",
 			section = interactionManager,
-			position = 4
+			position = 5,
+			hidden = true,
+			unhide = "interactMethod",
+			unhideValue = "MOUSE_EVENTS"
 	)
 	default MouseBehavior mouseBehavior()
 	{
@@ -82,11 +104,23 @@ public interface UnethicaliteConfig extends Config
 	}
 
 	@ConfigItem(
+			position = 6,
+			keyName = "neverLog",
+			name = "Neverlog",
+			description = "Skips idle checks",
+			section = interactionManager
+	)
+	default boolean neverLog()
+	{
+		return false;
+	}
+
+	@ConfigItem(
 			keyName = "drawMouse",
 			name = "Draw mouse events",
 			description = "Draws the sent mouse events on screen",
 			section = interactionManager,
-			position = 5
+			position = 7
 	)
 	default boolean drawMouse()
 	{
@@ -98,7 +132,7 @@ public interface UnethicaliteConfig extends Config
 			name = "Debug menu actions",
 			description = "Debugs attempted menu actions to the console",
 			section = interactionManager,
-			position = 6
+			position = 8
 	)
 	default boolean debugMenuActions()
 	{
@@ -107,10 +141,10 @@ public interface UnethicaliteConfig extends Config
 
 	@ConfigItem(
 			keyName = "debugDialogs",
-			name = "Debug dialog interacions",
+			name = "Debug dialog interactions",
 			description = "Debugs chat dialog actions to console",
 			section = interactionManager,
-			position = 7
+			position = 9
 	)
 	default boolean debugDialogs()
 	{
@@ -279,17 +313,5 @@ public interface UnethicaliteConfig extends Config
 	default boolean minimized()
 	{
 		return false;
-	}
-
-	@ConfigItem(
-			position = 3,
-			keyName = "neverLog",
-			name = "Neverlog",
-			description = "Skips idle checks",
-			section = minimalSection
-	)
-	default boolean neverLog()
-	{
-		return true;
 	}
 }
