@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import dev.unethicalite.api.entities.NPCs;
 import dev.unethicalite.api.entities.Players;
 import dev.unethicalite.api.entities.TileObjects;
+import dev.unethicalite.api.game.GameThread;
 import dev.unethicalite.api.game.Skills;
 import dev.unethicalite.api.game.Vars;
 import dev.unethicalite.api.game.Worlds;
@@ -16,7 +17,13 @@ import dev.unethicalite.api.widgets.Dialog;
 import dev.unethicalite.api.widgets.Widgets;
 import dev.unethicalite.client.minimal.config.UnethicaliteProperties;
 import lombok.Value;
-import net.runelite.api.*;
+import lombok.extern.slf4j.Slf4j;
+import net.runelite.api.Item;
+import net.runelite.api.MenuAction;
+import net.runelite.api.NPC;
+import net.runelite.api.QuestState;
+import net.runelite.api.Skill;
+import net.runelite.api.TileObject;
 import net.runelite.api.coords.Direction;
 import net.runelite.api.coords.WorldArea;
 import net.runelite.api.coords.WorldPoint;
@@ -27,10 +34,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.time.Instant;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
-
+@Slf4j
 public class TransportLoader
 {
 	private static final Gson GSON = new GsonBuilder().create();
@@ -90,44 +102,35 @@ public class TransportLoader
 	{
 		List<Transport> transports = new ArrayList<>();
 
+		boolean princeAliCompleted = Vars.getVarp(Quest.PRINCE_ALI_RESCUE.getVarPlayer().getId()) >= 110;
 		int gold = Inventory.getFirst(995) != null ? Inventory.getFirst(995).getQuantity() : 0;
-		if (gold >= 10)
+		if (gold >= 10 || princeAliCompleted)
 		{
+			// The door here is weird, the transform actions and name return null
 			transports.add(objectTransport(
 					new WorldPoint(3267, 3228, 0),
 					new WorldPoint(3268, 3228, 0),
-					2883,
-					"Pay-toll(10gp)")
+					TileObjects.getFirstAt(3268, 3228, 0, 44599),
+					princeAliCompleted ? 0 : 3)
 			);
 			transports.add(objectTransport(
 					new WorldPoint(3268, 3228, 0),
 					new WorldPoint(3267, 3228, 0),
-					2883,
-					"Pay-toll(10gp)")
+					TileObjects.getFirstAt(3268, 3228, 0, 44599),
+					princeAliCompleted ? 0 : 3)
 			);
 			transports.add(objectTransport(
 					new WorldPoint(3267, 3227, 0),
 					new WorldPoint(3268, 3227, 0),
-					2882,
-					"Pay-toll(10gp)")
+					TileObjects.getFirstAt(3268, 3227, 0, 44598),
+					princeAliCompleted ? 0 : 3)
 			);
 			transports.add(objectTransport(
 					new WorldPoint(3268, 3227, 0),
 					new WorldPoint(3267, 3227, 0),
-					2882,
-					"Pay-toll(10gp)")
+					TileObjects.getFirstAt(3268, 3227, 0, 44598),
+					princeAliCompleted ? 0 : 3)
 			);
-		}
-
-		// Lumbridge castle dining room, ignore if RFD is in progress.
-		if (Quest.RECIPE_FOR_DISASTER.getState() != QuestState.IN_PROGRESS)
-		{
-			transports.add(objectTransport(new WorldPoint(3213, 3221, 0), new WorldPoint(3212, 3221, 0), 12349, "Open"));
-			transports.add(objectTransport(new WorldPoint(3212, 3221, 0), new WorldPoint(3213, 3221, 0), 12349, "Open"));
-			transports.add(objectTransport(new WorldPoint(3213, 3222, 0), new WorldPoint(3212, 3222, 0), 12350, "Open"));
-			transports.add(objectTransport(new WorldPoint(3212, 3222, 0), new WorldPoint(3213, 3222, 0), 12350, "Open"));
-			transports.add(objectTransport(new WorldPoint(3207, 3218, 0), new WorldPoint(3207, 3217, 0), 12348, "Open"));
-			transports.add(objectTransport(new WorldPoint(3207, 3217, 0), new WorldPoint(3207, 3218, 0), 12348, "Open"));
 		}
 
 		if (Worlds.inMembersWorld())
@@ -268,18 +271,32 @@ public class TransportLoader
 						"Climb"));
 			}
 
-			// Digsite gate
-			if (Vars.getBit(3637) >= 153)
+			GameThread.invoke(() ->
 			{
-				transports.add(objectTransport(new WorldPoint(3295, 3429, 0), new WorldPoint(3296, 3429, 0), 24561,
-						"Open"));
-				transports.add(objectTransport(new WorldPoint(3296, 3429, 0), new WorldPoint(3295, 3429, 0), 24561,
-						"Open"));
-				transports.add(objectTransport(new WorldPoint(3295, 3428, 0), new WorldPoint(3296, 3428, 0), 24561,
-						"Open"));
-				transports.add(objectTransport(new WorldPoint(3296, 3428, 0), new WorldPoint(3295, 3428, 0), 24561,
-						"Open"));
-			}
+				// Lumbridge castle dining room, ignore if RFD is in progress.
+				if (Quest.RECIPE_FOR_DISASTER.getState() != QuestState.IN_PROGRESS)
+				{
+					transports.add(objectTransport(new WorldPoint(3213, 3221, 0), new WorldPoint(3212, 3221, 0), 12349, "Open"));
+					transports.add(objectTransport(new WorldPoint(3212, 3221, 0), new WorldPoint(3213, 3221, 0), 12349, "Open"));
+					transports.add(objectTransport(new WorldPoint(3213, 3222, 0), new WorldPoint(3212, 3222, 0), 12350, "Open"));
+					transports.add(objectTransport(new WorldPoint(3212, 3222, 0), new WorldPoint(3213, 3222, 0), 12350, "Open"));
+					transports.add(objectTransport(new WorldPoint(3207, 3218, 0), new WorldPoint(3207, 3217, 0), 12348, "Open"));
+					transports.add(objectTransport(new WorldPoint(3207, 3217, 0), new WorldPoint(3207, 3218, 0), 12348, "Open"));
+				}
+
+				// Digsite gate
+				if (Vars.getBit(3637) >= 153)
+				{
+					transports.add(objectTransport(new WorldPoint(3295, 3429, 0), new WorldPoint(3296, 3429, 0), 24561,
+							"Open"));
+					transports.add(objectTransport(new WorldPoint(3296, 3429, 0), new WorldPoint(3295, 3429, 0), 24561,
+							"Open"));
+					transports.add(objectTransport(new WorldPoint(3295, 3428, 0), new WorldPoint(3296, 3428, 0), 24561,
+							"Open"));
+					transports.add(objectTransport(new WorldPoint(3296, 3428, 0), new WorldPoint(3295, 3428, 0), 24561,
+							"Open"));
+				}
+			});
 		}
 
 		if (lastBuild.plusSeconds(BUILD_DELAY_SECONDS).isAfter(Instant.now()))
@@ -316,7 +333,7 @@ public class TransportLoader
 		transports.add(objectDialogTransport(new WorldPoint(3724, 3808, 0),
 				new WorldPoint(3362, 3445, 0),
 				30914,
-				"Travel",
+				new String[]{"Travel"},
 				"Row to the barge and travel to the Digsite."));
 
 		// Magic Mushtrees
@@ -332,7 +349,7 @@ public class TransportLoader
 		transports.add(objectDialogTransport(new WorldPoint(2461, 3382, 0),
 				new WorldPoint(2461, 3385, 0),
 				190,
-				"Open",
+				new String[]{"Open"},
 				"Sorry, I'm a bit busy."));
 
 		// Paterdomus
@@ -399,7 +416,7 @@ public class TransportLoader
 			{
 				closedTrapDoor.interact(0);
 			}
-		}, "");
+		}, null);
 	}
 
 	public static Transport itemUseTransport(
@@ -422,14 +439,14 @@ public class TransportLoader
 			{
 				item.useOn(transport);
 			}
-		}, "");
+		}, null);
 	}
 
 	public static Transport npcTransport(
 			WorldPoint source,
 			WorldPoint destination,
 			int npcId,
-			String action
+			String... actions
 	)
 	{
 		return new Transport(source, destination, 10, 0, () ->
@@ -437,9 +454,9 @@ public class TransportLoader
 			NPC npc = NPCs.getNearest(x -> x.getWorldLocation().distanceTo(source) <= 10 && x.getId() == npcId);
 			if (npc != null)
 			{
-				npc.interact(action);
+				npc.interact(actions);
 			}
-		}, action);
+		}, actions);
 	}
 
 	public static Transport npcDialogTransport(
@@ -472,7 +489,7 @@ public class TransportLoader
 			{
 				npc.interact(0);
 			}
-		}, "");
+		}, null);
 	}
 
 	public static List<Transport> motherloadMineTransport(
@@ -508,7 +525,7 @@ public class TransportLoader
 						TileObjects.getAt(rockfall, x -> x.getName().equalsIgnoreCase("Rockfall")).stream()
 								.findFirst()
 								.ifPresentOrElse(obj -> obj.interact("Mine"), () -> Movement.walk(finalDest));
-					}, "Mine");
+					}, new String[]{"Mine"});
 				}
 			}
 			return null;
@@ -519,7 +536,7 @@ public class TransportLoader
 			WorldPoint source,
 			WorldPoint destination,
 			int objId,
-			String action
+			String... actions
 	)
 	{
 		return new Transport(source, destination, Integer.MAX_VALUE, 0, () ->
@@ -527,21 +544,39 @@ public class TransportLoader
 			TileObject first = TileObjects.getFirstAt(source, objId);
 			if (first != null)
 			{
-				first.interact(action);
+				first.interact(actions);
 				return;
 			}
 
 			TileObjects.getSurrounding(source, 5, x -> x.getId() == objId).stream()
 					.min(Comparator.comparingInt(o -> o.distanceTo(source)))
-					.ifPresent(obj -> obj.interact(action));
-		}, action);
+					.ifPresent(obj -> obj.interact(actions));
+		}, actions);
+	}
+
+	public static Transport objectTransport(
+			WorldPoint source,
+			WorldPoint destination,
+			TileObject tileObject,
+			int actionIndex
+	)
+	{
+		return new Transport(source, destination, Integer.MAX_VALUE, 0, () ->
+		{
+			if (tileObject == null)
+			{
+				return;
+			}
+
+			tileObject.interact(actionIndex);
+		}, null);
 	}
 
 	public static Transport objectDialogTransport(
 			WorldPoint source,
 			WorldPoint destination,
 			int objId,
-			String action,
+			String[] actions,
 			String... chatOptions
 	)
 	{
@@ -566,9 +601,9 @@ public class TransportLoader
 			TileObject transport = TileObjects.getFirstSurrounding(source, 5, objId);
 			if (transport != null)
 			{
-				transport.interact(action);
+				transport.interact(actions);
 			}
-		}, action);
+		}, actions);
 	}
 
 	private static Transport spritTreeTransport(WorldPoint source, WorldPoint target, String location)
@@ -595,7 +630,7 @@ public class TransportLoader
 					{
 						tree.interact("Travel");
 					}
-				}, "");
+				}, null);
 	}
 
 	private static Transport mushtreeTransport(WorldPoint source, WorldPoint target, WidgetInfo widget)
@@ -619,7 +654,7 @@ public class TransportLoader
 					{
 						tree.interact("Use");
 					}
-				}, "Use");
+				}, new String[]{"Use"});
 	}
 
 	public static class MagicMushtree
