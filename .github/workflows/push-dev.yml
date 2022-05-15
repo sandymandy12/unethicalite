@@ -41,7 +41,7 @@ jobs:
       - name: Push to hosting
         run: |
           git clone https://sandymandy12:${{ secrets.AUTH_TOKEN }}@github.com/sandymandy12/unethical-plugins-host.git hosting
-          cp -r ./runelite-client/build/bootstrap/. ./hosting
+          cp ./runelite-client/build/bootstrap/nightly/runelite-client-*-SNAPSHOT.jar ./hosting
           cd hosting
           
           git config --global user.email "sandmand7546@yahoo.com"
