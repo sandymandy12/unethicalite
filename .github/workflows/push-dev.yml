@@ -35,13 +35,10 @@ jobs:
       - name: Building
         run: ./gradlew build --stacktrace -x test -x checkstyleMain --console=plain
 
-      - name: Bootstrap
-        run: ./gradlew bootstrapNightly -x test -x checkstyleMain --console=plain
-
       - name: Push to hosting
         run: |
           git clone https://sandymandy12:${{ secrets.AUTH_TOKEN }}@github.com/sandymandy12/unethical-plugins-host.git hosting
-          cp ./runelite-client/build/bootstrap/nightly/runelite-client-*-SNAPSHOT.jar ./hosting
+          cp ./runelite-client/build/libs//runelite-client-*-SNAPSHOT-shaded.jar ./hosting
           cd hosting
           
           git config --global user.email "sandmand7546@yahoo.com"
