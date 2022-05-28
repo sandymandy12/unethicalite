@@ -35,11 +35,11 @@ import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import dev.unethicalite.api.SceneEntity;
+import net.unethicalite.api.SceneEntity;
 import net.runelite.api.annotations.Varbit;
 
-import dev.unethicalite.api.MouseHandler;
-import dev.unethicalite.api.events.MenuAutomated;
+import net.unethicalite.api.MouseHandler;
+import net.unethicalite.api.events.MenuAutomated;
 import net.runelite.api.packets.ClientPacket;
 import net.runelite.api.packets.IsaacCipher;
 import net.runelite.api.packets.PacketBufferNode;
@@ -2701,4 +2701,8 @@ public interface Client extends OAuthApi, GameEngine
 	void setDraggedWidget(Widget widget);
 
 	void setIf1DraggedWidget(Widget widget);
+
+	void invokeWidgetAction(int identifier, int param1, int param0, int itemId, String target);
+
+	Widget getWidgetChild(int parent, int child);
 }

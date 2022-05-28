@@ -28,8 +28,8 @@ import java.awt.Rectangle;
 import java.util.Collection;
 import javax.annotation.Nullable;
 
-import dev.unethicalite.api.Identifiable;
-import dev.unethicalite.api.Interactable;
+import net.unethicalite.api.Identifiable;
+import net.unethicalite.api.Interactable;
 import net.runelite.api.FontTypeFace;
 import net.runelite.api.Point;
 import net.runelite.api.SpritePixels;
@@ -185,6 +185,17 @@ public interface Widget extends Interactable, Identifiable
 	 */
 	@Deprecated
 	void setRelativeY(int y);
+
+	/**
+	 * Set a forced position for the widget. This position overrides the relative x/y for the
+	 * widget, even if the widget is revalidated. To clear the forced position pass -1 for x/y.
+	 * @param x x pos relative to the parent
+	 * @param y y pos relative to the parent
+	 */
+	void setForcedPosition(int x, int y);
+
+	void setForcedX();
+	void setForcedY();
 
 	/**
 	 * Gets the text displayed on this widget.
