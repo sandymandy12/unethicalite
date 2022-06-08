@@ -1,15 +1,21 @@
 package net.unethicalite.api.widgets;
 
+import lombok.extern.slf4j.Slf4j;
+import net.runelite.api.VarPlayer;
 import net.unethicalite.api.entities.Players;
-import net.unethicalite.api.game.Game;
 import net.unethicalite.api.game.GameThread;
 import net.runelite.api.widgets.Widget;
 import net.runelite.api.widgets.WidgetInfo;
+import net.unethicalite.api.game.Vars;
+import net.unethicalite.client.Static;
 
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Supplier;
 
+@Slf4j
 public class Minigames
 {
 	private static final Supplier<Widget> MINIGAMES_TAB_BUTTON = () -> Widgets.get(707, 6);
@@ -17,13 +23,19 @@ public class Minigames
 
 	public static void teleport(Destination destination)
 	{
+		if (getLastMinigameTeleportUsage().plus(20, ChronoUnit.MINUTES).isAfter(Instant.now()))
+		{
+			log.warn("Tried to minigame teleport, but it's on cooldown.");
+			return;
+		}
+
 		Widget minigamesTeleportButton = Widgets.get(WidgetInfo.MINIGAME_TELEPORT_BUTTON);
 		List<Integer> teleportGraphics = List.of(800, 802, 803, 804);
 		if (isOpen() && minigamesTeleportButton != null)
 		{
 			if (Destination.getCurrent() != destination)
 			{
-				GameThread.invoke(() -> Game.getClient().runScript(124, destination.index));
+				GameThread.invoke(() -> Static.getClient().runScript(124, destination.index));
 				return;
 			}
 
@@ -32,7 +44,7 @@ public class Minigames
 				return;
 			}
 
-			Game.getClient().interact(1, 57, destination.index, 4980762);
+			Static.getClient().interact(1, 57, destination.index, 4980762);
 		}
 		else
 		{
@@ -69,6 +81,11 @@ public class Minigames
 	public static boolean isTabOpen()
 	{
 		return Tabs.isOpen(Tab.CLAN_CHAT);
+	}
+
+	public static Instant getLastMinigameTeleportUsage()
+	{
+		return Instant.ofEpochSecond(Vars.getVarp(VarPlayer.LAST_MINIGAME_TELEPORT.getId()) * 60L);
 	}
 
 	public enum Destination

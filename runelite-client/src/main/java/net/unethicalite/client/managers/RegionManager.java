@@ -15,6 +15,7 @@ import net.runelite.api.Tile;
 import net.runelite.api.coords.Direction;
 import net.runelite.api.coords.WorldPoint;
 import net.runelite.client.plugins.unethicalite.regions.TileFlag;
+import net.unethicalite.client.Static;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -38,7 +39,6 @@ public class RegionManager
 	public static final MediaType JSON_MEDIATYPE = MediaType.parse("application/json");
 	public static final Gson GSON = new GsonBuilder().create();
 	private static final Logger logger = LoggerFactory.getLogger(RegionManager.class);
-	private static final int VERSION = 3;
 
 	@Inject
 	@Named("unethicalite.api.url")
@@ -57,13 +57,12 @@ public class RegionManager
 			return;
 		}
 
-		if (Game.getClient().isInInstancedRegion())
+		if (Static.getClient().isInInstancedRegion())
 		{
 			executorService.schedule(() ->
 			{
 				Request request = new Request.Builder()
 						.get()
-						.header("api-key", "f0bbb47b-839a-43f7-b907-eff4ab131231")
 						.url(apiUrl + "/regions/instance/" + Players.getLocal().getWorldLocation().getRegionID())
 						.build();
 
@@ -89,7 +88,7 @@ public class RegionManager
 			return;
 		}
 
-		CollisionData[] col = Game.getClient().getCollisionMaps();
+		CollisionData[] col = Static.getClient().getCollisionMaps();
 		if (col == null)
 		{
 			return;
@@ -97,7 +96,7 @@ public class RegionManager
 
 		List<TileFlag> tileFlags = new ArrayList<>();
 		Map<WorldPoint, List<Transport>> transportLinks = Walker.buildTransportLinks();
-		int plane = Game.getClient().getPlane();
+		int plane = Static.getClient().getPlane();
 		CollisionData data = col[plane];
 		if (data == null)
 		{
@@ -109,8 +108,8 @@ public class RegionManager
 		{
 			for (int y = 0; y < flags.length; y++)
 			{
-				int tileX = x + Game.getClient().getBaseX();
-				int tileY = y + Game.getClient().getBaseY();
+				int tileX = x + Static.getClient().getBaseX();
+				int tileY = y + Static.getClient().getBaseY();
 				int flag = flags[x][y];
 
 				// Stop if we reach any tiles which dont have collision data loaded
@@ -164,7 +163,7 @@ public class RegionManager
 				}
 
 				List<Transport> transports = transportLinks.get(tileCoords);
-				if (plane == Game.getClient().getPlane())
+				if (plane == Static.getClient().getPlane())
 				{
 					for (Direction direction : Direction.values())
 					{
@@ -198,8 +197,7 @@ public class RegionManager
 			RequestBody body = RequestBody.create(JSON_MEDIATYPE, json);
 			Request request = new Request.Builder()
 					.post(body)
-					.header("api-key", "f0bbb47b-839a-43f7-b907-eff4ab131231")
-					.url(apiUrl + "/regions/" + VERSION)
+					.url(apiUrl + "/regions")
 					.build();
 			try (Response response = okHttpClient.newCall(request)
 					.execute())

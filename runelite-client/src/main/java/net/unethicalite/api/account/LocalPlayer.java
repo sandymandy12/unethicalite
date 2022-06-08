@@ -6,22 +6,28 @@ import net.unethicalite.api.game.Vars;
 import net.runelite.api.Player;
 import net.runelite.api.VarPlayer;
 import net.runelite.api.vars.AccountType;
+import net.unethicalite.client.Static;
 
 public class LocalPlayer
 {
+	public static Player get()
+	{
+		return Players.getLocal();
+	}
+
 	public static String getUsername()
 	{
-		return Game.getClient().getUsername();
+		return Static.getClient().getUsername();
 	}
 
 	public static String getPassword()
 	{
-		return Game.getClient().getPassword();
+		return Static.getClient().getPassword();
 	}
 
 	public static int getTotalLevel()
 	{
-		return Game.getClient().getTotalLevel();
+		return Static.getClient().getTotalLevel();
 	}
 
 	public static int getQuestPoints()
@@ -39,18 +45,13 @@ public class LocalPlayer
 		return getMembershipDays() > 0;
 	}
 
-	public static Player getEntity()
-	{
-		return Players.getLocal();
-	}
-
 	public static String getDisplayName()
 	{
-		return getEntity().getName();
+		return get().getName();
 	}
 
 	public static AccountType getAccountType()
 	{
-		return Game.getClient().getAccountType();
+		return Static.getClient().getAccountType();
 	}
 }
