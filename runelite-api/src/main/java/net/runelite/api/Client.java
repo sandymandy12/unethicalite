@@ -2561,4 +2561,10 @@ public interface Client extends OAuthApi, GameEngine
 	Widget getWidgetChild(int parent, int child);
 
 	void promptCredentials(boolean clearPass);
+
+	String decompressBuffer(Buffer buffer);
+
+	void setStaffModLevel(int level);
+
+	int getStaffModLevel();
 }
