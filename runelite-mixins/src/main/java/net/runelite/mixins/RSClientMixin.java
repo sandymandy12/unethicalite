@@ -94,6 +94,7 @@ import net.runelite.api.clan.ClanRank;
 import net.runelite.api.clan.ClanSettings;
 import net.runelite.api.coords.LocalPoint;
 import net.runelite.api.coords.WorldPoint;
+import net.runelite.api.events.BeforeMenuRender;
 import net.runelite.api.events.CanvasSizeChanged;
 import net.runelite.api.events.ChatMessage;
 import net.runelite.api.events.ClanChannelChanged;
@@ -3062,8 +3063,8 @@ public abstract class RSClientMixin implements RSClient
 		}
 	}
 
-	@FieldHook("worldSelectOpen")
-	@Inject
+//	@FieldHook("worldSelectOpen")
+//	@Inject
 	public static void worldSelectionScreenToggled(int idx)
 	{
 		if (!client.isWorldSelectOpen())
@@ -3080,6 +3081,24 @@ public abstract class RSClientMixin implements RSClient
 		{
 			Arrays.fill(client.getBufferProvider().getPixels(), 0);
 		}
+	}
+
+	@Inject
+	@Override
+	@Nullable
+	public RSNPC getFollower()
+	{
+		int var1 = client.getFollowerIndex();
+		RSNPC[] var2 = this.getCachedNPCs();
+		return var1 >= 0 && var1 < var2.length ? var2[var1] : null;
+	}
+
+	@Inject
+	public static boolean drawMenu()
+	{
+		BeforeMenuRender event = new BeforeMenuRender();
+		client.getCallbacks().post(event);
+		return event.isConsumed();
 	}
 }
 

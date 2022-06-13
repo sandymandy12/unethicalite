@@ -175,61 +175,12 @@ public interface UnethicaliteConfig extends Config
 		return false;
 	}
 
-	@ConfigItem(
-			keyName = "drawMouse",
-			name = "Draw mouse events",
-			description = "Draws the sent mouse events on screen",
-			section = interactionManager,
-			position = 7
-	)
-	default boolean drawMouse()
-	{
-		return false;
-	}
-
-	@ConfigItem(
-			keyName = "debugMenuAction",
-			name = "Debug menu actions",
-			description = "Debugs attempted menu actions to the console",
-			section = interactionManager,
-			position = 8
-	)
-	default boolean debugMenuActions()
-	{
-		return false;
-	}
-
-	@ConfigItem(
-			keyName = "debugDialogs",
-			name = "Debug dialog interactions",
-			description = "Debugs chat dialog actions to console",
-			section = interactionManager,
-			position = 9
-	)
-	default boolean debugDialogs()
-	{
-		return false;
-	}
-
 	@ConfigSection(
 			name = "Pathfinder/Regions",
 			position = 1,
 			description = ""
 	)
 	String pathfinderSection = "Pathfinder/Regions";
-
-	@ConfigItem(
-			keyName = "apiKey",
-			name = "API Key",
-			description = "API Key used for contributing collision data to our backend.",
-			secret = true,
-			position = 0,
-			section = pathfinderSection
-	)
-	default String apiKey()
-	{
-		return "";
-	}
 
 	@ConfigItem(
 			keyName = "useTransports",
@@ -255,63 +206,26 @@ public interface UnethicaliteConfig extends Config
 		return true;
 	}
 
-	@Range(max = 3)
-	@ConfigItem(
-			keyName = "collisionOverlayPlane",
-			name = "Collision overlay plane",
-			description = "Collision overlay plane",
-			position = 1,
-			section = pathfinderSection
-	)
-	default int collisionOverlayPlane()
-	{
-		return 0;
-	}
-
-	@ConfigItem(
-			keyName = "collisionOverlay",
-			name = "Show collision overlay",
-			description = "Show collision overlay",
-			position = 2,
-			section = pathfinderSection
-	)
-	default boolean collisionOverlay()
-	{
-		return false;
-	}
-
-	@ConfigItem(
-			keyName = "transportsOverlay",
-			name = "Show transports overlay",
-			description = "Show transports overlay",
-			position = 3,
-			section = pathfinderSection
-	)
-	default boolean transportsOverlay()
-	{
-		return false;
-	}
-
-	@ConfigItem(
-			keyName = "pathOverlay",
-			name = "Show path overlay",
-			description = "Show path overlay",
-			position = 4,
-			section = pathfinderSection
-	)
-	default boolean pathOverlay()
-	{
-		return false;
-	}
-
 	@ConfigItem(
 			keyName = "downloadCollisionData",
-			name = "Update collision data",
+			name = "Download collision data",
 			description = "Downloads new collision data from the server and updates the currently used collision map",
 			position = 5,
 			section = pathfinderSection
 	)
 	default Button download()
+	{
+		return new Button();
+	}
+
+	@ConfigItem(
+			keyName = "localCollisionData",
+			name = "Load cached collision data",
+			description = "Loads the locally stored collision data",
+			position = 6,
+			section = pathfinderSection
+	)
+	default Button reload()
 	{
 		return new Button();
 	}

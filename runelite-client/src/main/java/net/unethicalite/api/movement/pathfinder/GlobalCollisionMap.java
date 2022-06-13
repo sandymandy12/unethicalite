@@ -1,12 +1,15 @@
 package net.unethicalite.api.movement.pathfinder;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.util.Arrays;
 import java.util.Objects;
+import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
 public class GlobalCollisionMap implements CollisionMap
@@ -109,7 +112,7 @@ public class GlobalCollisionMap implements CollisionMap
 
 		if (region == null)
 		{
-			return true;
+			return false;
 		}
 
 		int regionX = x % 64;
@@ -133,6 +136,21 @@ public class GlobalCollisionMap implements CollisionMap
 	public boolean e(int x, int y, int z)
 	{
 		return get(x, y, z, 1);
+	}
+
+	public static GlobalCollisionMap fetchFromUrl(String url) throws IOException
+	{
+		try (InputStream is = Walker.class.getResourceAsStream("/regions"))
+		{
+			if (is == null)
+			{
+				return new GlobalCollisionMap();
+			}
+
+			return new GlobalCollisionMap(
+					new GZIPInputStream(new ByteArrayInputStream(is.readAllBytes())).readAllBytes()
+			);
+		}
 	}
 }
 
