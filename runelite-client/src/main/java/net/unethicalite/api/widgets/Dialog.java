@@ -112,16 +112,19 @@ public class Dialog
 		return Widgets.isVisible(Widgets.get(WidgetInfo.CHATBOX_FULL_INPUT)) && !GrandExchange.isSearchingItem();
 	}
 
-	public static void enterInput(String input)
+	public static void enterName(String input)
 	{
 		GameThread.invoke(() -> DialogPackets.sendNameInput(input));
-		close();
 	}
 
-	public static void enterInput(int input)
+	public static void enterText(String input)
+	{
+		GameThread.invoke(() -> DialogPackets.sendTextInput(input));
+	}
+
+	public static void enterAmount(int input)
 	{
 		GameThread.invoke(() -> DialogPackets.sendNumberInput(input));
-		close();
 	}
 
 	public static boolean isViewingOptions()

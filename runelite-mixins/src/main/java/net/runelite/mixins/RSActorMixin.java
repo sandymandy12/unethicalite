@@ -25,14 +25,11 @@
 package net.runelite.mixins;
 
 import com.google.common.collect.ImmutableSet;
-import java.awt.Graphics2D;
-import java.awt.Polygon;
-import java.awt.image.BufferedImage;
-import java.util.Set;
 import net.runelite.api.Actor;
 import net.runelite.api.Hitsplat;
 import net.runelite.api.NPC;
 import net.runelite.api.NPCComposition;
+import net.runelite.api.NpcID;
 import net.runelite.api.Perspective;
 import net.runelite.api.Player;
 import net.runelite.api.Point;
@@ -61,6 +58,11 @@ import net.runelite.rs.api.RSIterableNodeDeque;
 import net.runelite.rs.api.RSNPC;
 import net.runelite.rs.api.RSNode;
 
+import java.awt.Graphics2D;
+import java.awt.Polygon;
+import java.awt.image.BufferedImage;
+import java.util.Set;
+
 @Mixin(RSActor.class)
 public abstract class RSActorMixin implements RSActor
 {
@@ -68,7 +70,7 @@ public abstract class RSActorMixin implements RSActor
 	private static RSClient client;
 
 	@Inject
-	private final Set<Integer> combatInfoFilter = ImmutableSet.of(0, 2, 16, 17, 18, 19, 20, 21, 22);
+	private static final Set<Integer> combatInfoFilter = ImmutableSet.of(0, 2, 16, 17, 18, 19, 20, 21, 22);
 
 	@Inject
 	private boolean dead;
@@ -273,7 +275,7 @@ public abstract class RSActorMixin implements RSActor
 
 		if (healthRatio == 0)
 		{
-			if (!isDead())
+			if (isDead())
 			{
 				return;
 			}
@@ -290,7 +292,7 @@ public abstract class RSActorMixin implements RSActor
 		}
 		else if (healthRatio > 0)
 		{
-			if (this instanceof RSNPC && ((RSNPC) this).getId() == 319 && isDead())
+			if (this instanceof RSNPC && ((RSNPC) this).getId() == NpcID.CORPOREAL_BEAST && isDead())
 			{
 				return;
 			}

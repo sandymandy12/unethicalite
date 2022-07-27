@@ -19,8 +19,13 @@ import net.unethicalite.api.script.paint.Paint;
 import net.unethicalite.client.config.UnethicaliteConfig;
 import net.unethicalite.client.devtools.EntityRenderer;
 import net.unethicalite.client.managers.DefinitionManager;
+import net.unethicalite.client.managers.InventoryManager;
 import net.unethicalite.client.managers.NativeInputManager;
 import net.unethicalite.client.managers.NeverLogManager;
+import net.unethicalite.client.managers.PluginRepoManager;
+import net.unethicalite.client.managers.QuestManager;
+import net.unethicalite.client.managers.RegionManager;
+import net.unethicalite.client.managers.SettingsManager;
 import net.unethicalite.client.managers.interaction.InteractionManager;
 
 import javax.inject.Inject;
@@ -115,6 +120,25 @@ public class Static
 	@Inject
 	@Getter
 	private static ClientToolbar clientToolbar;
+
+	@Inject
+	@Getter
+	private static RegionManager regionManager;
+
+	@Inject
+	@Getter
+	private static InventoryManager inventoryManager;
+
+	@Inject
+	@Getter
+	private static QuestManager questManager;
+
+	@Inject
+	@Getter
+	private static PluginRepoManager pluginRepoManager;
+
+	@Inject
+	private static SettingsManager settingsManager;
 
 	public static void setScriptArgs(String[] scriptArgs)
 	{

@@ -1,20 +1,6 @@
 package net.unethicalite.client.minimal.ui;
 
 import net.miginfocom.swing.MigLayout;
-import net.runelite.client.plugins.unethicalite.UnethicalitePanel;
-import net.runelite.client.ui.ColorScheme;
-import net.unethicalite.api.plugins.Script;
-import net.unethicalite.client.config.UnethicaliteConfig;
-import net.unethicalite.client.devtools.EntityRenderer;
-import net.unethicalite.client.devtools.scriptinspector.ScriptInspector;
-import net.unethicalite.client.devtools.varinspector.VarInspector;
-import net.unethicalite.client.devtools.widgetinspector.WidgetInspector;
-import net.unethicalite.client.minimal.config.DisableRenderCallbacks;
-import net.unethicalite.client.minimal.config.MinimalConfigPanel;
-import net.unethicalite.client.minimal.plugins.MinimalPluginChanged;
-import net.unethicalite.client.minimal.plugins.MinimalPluginState;
-import net.unethicalite.client.managers.MinimalFpsManager;
-import net.unethicalite.client.managers.MinimalPluginManager;
 import net.runelite.api.Client;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.config.RuneLiteConfig;
@@ -22,12 +8,31 @@ import net.runelite.client.eventbus.EventBus;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.events.ConfigChanged;
 import net.runelite.client.plugins.config.PluginConfigurationDescriptor;
+import net.runelite.client.plugins.unethicalite.ui.UnethicalitePanel;
+import net.runelite.client.ui.ColorScheme;
 import net.runelite.client.ui.components.colorpicker.ColorPickerManager;
+import net.unethicalite.api.plugins.Script;
+import net.unethicalite.client.config.UnethicaliteConfig;
+import net.unethicalite.client.devtools.EntityRenderer;
+import net.unethicalite.client.devtools.scriptinspector.ScriptInspector;
+import net.unethicalite.client.devtools.varinspector.VarInspector;
+import net.unethicalite.client.devtools.widgetinspector.WidgetInspector;
+import net.unethicalite.client.managers.MinimalFpsManager;
+import net.unethicalite.client.managers.MinimalPluginManager;
+import net.unethicalite.client.minimal.config.DisableRenderCallbacks;
+import net.unethicalite.client.minimal.config.MinimalConfigPanel;
+import net.unethicalite.client.minimal.plugins.MinimalPluginChanged;
+import net.unethicalite.client.minimal.plugins.MinimalPluginState;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JRadioButton;
+import javax.swing.SwingUtilities;
+import javax.swing.WindowConstants;
 
 @Singleton
 public class MinimalToolbar extends JMenuBar
@@ -103,7 +108,7 @@ public class MinimalToolbar extends JMenuBar
 		clientConfigPanel = new MinimalConfigPanel(configManager, colorPickerManager, eventBus);
 		clientConfigPanel.init(cl);
 
-		UnethicalitePanel unethicalitePanel = new UnethicalitePanel(unethicaliteConfig, configManager);
+		UnethicalitePanel unethicalitePanel = new UnethicalitePanel(client, unethicaliteConfig, configManager);
 		eventBus.register(unethicalitePanel);
 
 		JFrame interactWindow = new JFrame();
@@ -302,18 +307,6 @@ public class MinimalToolbar extends JMenuBar
 		switch (event.getKey())
 		{
 			case "renderOff":
-				boolean enabled = Boolean.parseBoolean(event.getNewValue());
-				client.setLowCpu(enabled);
-
-				if (enabled)
-				{
-					client.setDrawCallbacks(DISABLE_RENDERING);
-				}
-				else
-				{
-					client.setDrawCallbacks(null);
-				}
-
 				if (rendering != null)
 				{
 					SwingUtilities.invokeLater(() -> rendering.setSelected(Boolean.parseBoolean(event.getNewValue())));
@@ -325,7 +318,6 @@ public class MinimalToolbar extends JMenuBar
 				minimalFpsManager.reloadConfig(unethicaliteConfig.fpsLimit());
 				break;
 		}
-
 	}
 
 	@Subscribe

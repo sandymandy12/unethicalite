@@ -1,15 +1,15 @@
 package net.unethicalite.api.events;
 
-import lombok.Value;
+import lombok.Data;
 import net.runelite.api.packets.PacketBufferNode;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
-@Value
+@Data
 public class PacketSent
 {
-	PacketBufferNode packetBufferNode;
+	private final PacketBufferNode packetBufferNode;
 
 	public String hexDump()
 	{
@@ -29,7 +29,7 @@ public class PacketSent
 		final int width = 16;
 
 		StringBuilder builder = new StringBuilder();
-
+		builder.append(Arrays.toString(array) + "\n");
 		for (int rowOffset = offset; rowOffset < offset + length; rowOffset += width)
 		{
 			builder.append(String.format("%06d     ", rowOffset));

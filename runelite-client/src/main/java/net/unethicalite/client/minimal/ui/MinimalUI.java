@@ -25,7 +25,6 @@
 package net.unethicalite.client.minimal.ui;
 
 import com.google.common.base.Strings;
-import net.unethicalite.client.config.UnethicaliteConfig;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
@@ -34,6 +33,7 @@ import net.runelite.api.GameState;
 import net.runelite.api.Player;
 import net.runelite.api.Point;
 import net.runelite.api.events.GameStateChanged;
+import net.runelite.client.RuneLiteProperties;
 import net.runelite.client.callback.ClientThread;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.config.RuneLiteConfig;
@@ -48,14 +48,32 @@ import net.runelite.client.util.ImageUtil;
 import net.runelite.client.util.OSType;
 import net.runelite.client.util.OSXUtil;
 import net.runelite.client.util.WinUtil;
+import net.unethicalite.client.config.UnethicaliteConfig;
 
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Provider;
 import javax.inject.Singleton;
-import javax.swing.*;
+import javax.swing.BoxLayout;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
+import javax.swing.SwingUtilities;
+import javax.swing.ToolTipManager;
 import java.applet.Applet;
-import java.awt.*;
+import java.awt.Canvas;
+import java.awt.Component;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.Frame;
+import java.awt.Graphics;
+import java.awt.GraphicsConfiguration;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
+import java.awt.Rectangle;
+import java.awt.Toolkit;
+import java.awt.Window;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
@@ -73,6 +91,7 @@ import static javax.swing.JOptionPane.INFORMATION_MESSAGE;
 @Singleton
 public class MinimalUI
 {
+	public static final BufferedImage ICON = ImageUtil.loadImageResource(ClientUI.class, "/openosrs.png");
 	private static final String CONFIG_GROUP = "runelite";
 	private static final String PLUS_CONFIG_GROUP = "runelite";
 	private static final String CONFIG_CLIENT_BOUNDS = "clientBounds";
@@ -81,7 +100,6 @@ public class MinimalUI
 	private static final String CONFIG_OPACITY_AMOUNT = "opacityPercentage";
 	private static final int CLIENT_WELL_HIDDEN_MARGIN = 160;
 	private static final int CLIENT_WELL_HIDDEN_MARGIN_TOP = 10;
-	public static final BufferedImage ICON = ImageUtil.loadImageResource(ClientUI.class, "/openosrs.png");
 	public static boolean allowInput = false;
 
 	@Getter
@@ -91,13 +109,12 @@ public class MinimalUI
 	private final Applet client;
 	private final ConfigManager configManager;
 	private final Provider<ClientThread> clientThreadProvider;
+	private final EventBus eventBus;
 	private JPanel container;
 	private Dimension lastClientSize;
 	private Field opacityField;
 	private Field peerField;
 	private Method setOpacityMethod;
-
-	private final EventBus eventBus;
 	private Cursor defaultCursor;
 
 	@Inject
@@ -120,6 +137,33 @@ public class MinimalUI
 		this.configManager = configManager;
 		this.clientThreadProvider = clientThreadProvider;
 		this.eventBus = eventbus;
+	}
+
+	public static int getX()
+	{
+		return frame.getX();
+	}
+
+	public static int getY()
+	{
+		return frame.getY();
+	}
+
+	public static void setupDefaults()
+	{
+		// Force heavy-weight popups/tooltips.
+		// Prevents them from being obscured by the game applet.
+		ToolTipManager.sharedInstance().setLightWeightPopupEnabled(false);
+		ToolTipManager.sharedInstance().setInitialDelay(300);
+		JPopupMenu.setDefaultLightWeightPopupEnabled(false);
+
+		// Do not render shadows under popups/tooltips.
+		// Fixes black boxes under popups that are above the game applet.
+		System.setProperty("jgoodies.popupDropShadowEnabled", "false");
+
+		// Do not fill in background on repaint. Reduces flickering when
+		// the applet is resized.
+		System.setProperty("sun.awt.noerasebackground", "true");
 	}
 
 	@Subscribe
@@ -171,7 +215,7 @@ public class MinimalUI
 				return false;
 			}
 
-			frame.setTitle("OpenOSRS" + " - " + name);
+			frame.setTitle(RuneLiteProperties.getTitle() + " - " + name);
 			return true;
 		});
 	}
@@ -193,7 +237,7 @@ public class MinimalUI
 			// Try to enable fullscreen on OSX
 			OSXUtil.tryEnableFullscreen(frame);
 
-			frame.setTitle("OpenOSRS");
+			frame.setTitle(RuneLiteProperties.getTitle());
 			frame.setIconImage(ICON);
 			frame.getLayeredPane().setCursor(Cursor.getDefaultCursor()); // Prevent substance from using a resize cursor for pointing
 
@@ -470,12 +514,12 @@ public class MinimalUI
 
 			if (player != null && player.getName() != null)
 			{
-				frame.setTitle("OpenOSRS" + " - " + player.getName());
+				frame.setTitle(RuneLiteProperties.getTitle() + " - " + player.getName());
 			}
 		}
 		else
 		{
-			frame.setTitle("OpenOSRS");
+			frame.setTitle(RuneLiteProperties.getTitle());
 		}
 
 		if (frame.isAlwaysOnTopSupported())
@@ -566,16 +610,6 @@ public class MinimalUI
 			configManager.unsetConfiguration(CONFIG_GROUP, CONFIG_CLIENT_MAXIMIZED);
 			configManager.setConfiguration(CONFIG_GROUP, CONFIG_CLIENT_BOUNDS, bounds);
 		}
-	}
-
-	public static int getX()
-	{
-		return frame.getX();
-	}
-
-	public static int getY()
-	{
-		return frame.getY();
 	}
 
 	private void setOpacity()
@@ -690,22 +724,5 @@ public class MinimalUI
 	public void setTitle(String title)
 	{
 		frame.setTitle(title);
-	}
-
-	public static void setupDefaults()
-	{
-		// Force heavy-weight popups/tooltips.
-		// Prevents them from being obscured by the game applet.
-		ToolTipManager.sharedInstance().setLightWeightPopupEnabled(false);
-		ToolTipManager.sharedInstance().setInitialDelay(300);
-		JPopupMenu.setDefaultLightWeightPopupEnabled(false);
-
-		// Do not render shadows under popups/tooltips.
-		// Fixes black boxes under popups that are above the game applet.
-		System.setProperty("jgoodies.popupDropShadowEnabled", "false");
-
-		// Do not fill in background on repaint. Reduces flickering when
-		// the applet is resized.
-		System.setProperty("sun.awt.noerasebackground", "true");
 	}
 }

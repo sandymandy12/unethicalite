@@ -8,10 +8,6 @@ import com.github.kwhat.jnativehook.mouse.NativeMouseEvent;
 import com.github.kwhat.jnativehook.mouse.NativeMouseInputListener;
 import com.github.kwhat.jnativehook.mouse.NativeMouseWheelEvent;
 import com.github.kwhat.jnativehook.mouse.NativeMouseWheelListener;
-import net.unethicalite.api.events.MouseAutomated;
-import net.unethicalite.api.events.NativeKeyInput;
-import net.unethicalite.api.events.NativeMouseInput;
-import net.unethicalite.client.config.UnethicaliteConfig;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
@@ -20,6 +16,10 @@ import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.events.ConfigChanged;
 import net.runelite.client.input.MouseListener;
 import net.runelite.client.input.MouseManager;
+import net.unethicalite.api.events.MouseAutomated;
+import net.unethicalite.api.events.NativeKeyInput;
+import net.unethicalite.api.events.NativeMouseInput;
+import net.unethicalite.client.config.UnethicaliteConfig;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -62,7 +62,10 @@ public class InputManager implements MouseListener, NativeMouseInputListener, Na
 		this.interactionConfig = interactionConfig;
 		eventBus.register(this);
 		manager.registerMouseListener(this);
-		GlobalScreen.registerNativeHook();
+		if (!Boolean.parseBoolean(System.getenv("disablenative")))
+		{
+			GlobalScreen.registerNativeHook();
+		}
 		Logger.getLogger(GlobalScreen.class.getPackage().getName()).setLevel(java.util.logging.Level.OFF);
 	}
 

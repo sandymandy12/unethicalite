@@ -25,27 +25,10 @@
 package net.runelite.api;
 
 import com.jagex.oldscape.pub.OAuthApi;
-import java.awt.Canvas;
-import java.awt.Dimension;
-import java.math.BigInteger;
-import java.util.EnumSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import net.runelite.api.packets.ServerPacket;
-import net.unethicalite.api.SceneEntity;
+import net.runelite.api.annotations.VarCInt;
+import net.runelite.api.annotations.VarCStr;
 import net.runelite.api.annotations.Varbit;
 import net.runelite.api.annotations.VisibleForDevtools;
-
-import net.unethicalite.api.MouseHandler;
-import net.unethicalite.api.events.MenuAutomated;
-import net.runelite.api.packets.ClientPacket;
-import net.runelite.api.packets.IsaacCipher;
-import net.runelite.api.packets.PacketBufferNode;
-import net.runelite.api.packets.PacketWriter;
 import net.runelite.api.annotations.VisibleForExternalPlugins;
 import net.runelite.api.clan.ClanChannel;
 import net.runelite.api.clan.ClanID;
@@ -55,12 +38,31 @@ import net.runelite.api.coords.WorldPoint;
 import net.runelite.api.events.PlayerChanged;
 import net.runelite.api.hooks.Callbacks;
 import net.runelite.api.hooks.DrawCallbacks;
+import net.runelite.api.packets.ClientPacket;
+import net.runelite.api.packets.IsaacCipher;
+import net.runelite.api.packets.PacketBufferNode;
+import net.runelite.api.packets.PacketWriter;
+import net.runelite.api.packets.ServerPacket;
 import net.runelite.api.vars.AccountType;
 import net.runelite.api.widgets.ItemQuantityMode;
 import net.runelite.api.widgets.Widget;
+import net.runelite.api.widgets.WidgetConfig;
 import net.runelite.api.widgets.WidgetInfo;
-import org.slf4j.Logger;
+import net.unethicalite.api.MouseHandler;
+import net.unethicalite.api.SceneEntity;
+import net.unethicalite.api.events.MenuAutomated;
 import org.intellij.lang.annotations.MagicConstant;
+import org.slf4j.Logger;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.awt.Canvas;
+import java.awt.Dimension;
+import java.math.BigInteger;
+import java.util.EnumSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Represents the RuneScape client.
@@ -928,22 +930,6 @@ public interface Client extends OAuthApi, GameEngine
 	int getServerVarbitValue(@Varbit int varbit);
 
 	/**
-	 * Gets an int value corresponding to the passed variable.
-	 *
-	 * @param varClientInt the variable
-	 * @return the value
-	 */
-	int getVar(VarClientInt varClientInt);
-
-	/**
-	 * Gets a String value corresponding to the passed variable.
-	 *
-	 * @param varClientStr the variable
-	 * @return the value
-	 */
-	String getVar(VarClientStr varClientStr);
-
-	/**
 	 * Gets the value of a given VarPlayer.
 	 *
 	 * @param varpId the VarPlayer id
@@ -967,30 +953,34 @@ public interface Client extends OAuthApi, GameEngine
 	/**
 	 * Gets the value of a given VarClientInt
 	 *
-	 * @param varcIntId the VarClientInt id
+	 * @param var the {@link VarClientInt}
 	 * @return the value
 	 */
-	@VisibleForExternalPlugins
-	int getVarcIntValue(int varcIntId);
+	int getVarcIntValue(@VarCInt int var);
 
 	/**
 	 * Gets the value of a given VarClientStr
 	 *
-	 * @param varcStrId the VarClientStr id
+	 * @param var the {@link VarClientStr}
 	 * @return the value
 	 */
-	@VisibleForExternalPlugins
-	String getVarcStrValue(int varcStrId);
+	String getVarcStrValue(@VarCStr int var);
 
 	/**
 	 * Sets a VarClientString to the passed value
+	 *
+	 * @param var the {@link VarClientStr}
+	 * @param value the new value
 	 */
-	void setVar(VarClientStr varClientStr, String value);
+	void setVarcStrValue(@VarCStr int var, String value);
 
 	/**
 	 * Sets a VarClientInt to the passed value
+	 *
+	 * @param var the {@link VarClientInt}
+	 * @param value the new value
 	 */
-	void setVar(VarClientInt varClientStr, int value);
+	void setVarcIntValue(@VarCInt int var, int value);
 
 	/**
 	 * Sets the value of a varbit
@@ -1137,6 +1127,11 @@ public interface Client extends OAuthApi, GameEngine
 	 * Gets the client's cache of in memory struct compositions
 	 */
 	NodeCache getStructCompositionCache();
+
+	/**
+	 * Gets a entry out of a DBTable Row
+	 */
+	Object getDBTableField(int rowID, int column, int tupleIndex, int fieldIndex);
 
 	/**
 	 * Gets an array of all world areas
@@ -2505,10 +2500,7 @@ public interface Client extends OAuthApi, GameEngine
 	 */
 	PacketBufferNode preparePacket(ClientPacket packet, IsaacCipher isaac);
 
-	/**
-	 * The packet which is sent when sending a name input (ex. adding friends).
-	 * @return the ClientPacket which belongs to this packet
-	 */
+	PacketBufferNode preparePacket(ClientPacket packet);
 
 	void setSelectedSceneTileX(int sceneX);
 
@@ -2618,4 +2610,6 @@ public interface Client extends OAuthApi, GameEngine
 	void setStaffModLevel(int level);
 
 	int getStaffModLevel();
+
+	void setShowMouseOverText(boolean showMouseOverText);
 }

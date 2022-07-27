@@ -1,14 +1,6 @@
 package net.unethicalite.client.managers;
 
 import com.google.inject.Key;
-import net.unethicalite.api.plugins.Plugins;
-import net.unethicalite.api.plugins.Script;
-import net.unethicalite.client.config.UnethicaliteConfig;
-import net.unethicalite.client.minimal.MinimalClient;
-import net.unethicalite.client.minimal.plugins.MinimalClassLoader;
-import net.unethicalite.client.minimal.plugins.MinimalPluginChanged;
-import net.unethicalite.client.minimal.plugins.MinimalPluginState;
-import net.unethicalite.client.minimal.plugins.PluginEntry;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
@@ -25,6 +17,14 @@ import net.runelite.client.plugins.PluginManager;
 import net.runelite.client.util.WorldUtil;
 import net.runelite.http.api.worlds.World;
 import net.runelite.http.api.worlds.WorldResult;
+import net.unethicalite.api.plugins.Plugins;
+import net.unethicalite.api.plugins.Script;
+import net.unethicalite.client.config.UnethicaliteConfig;
+import net.unethicalite.client.minimal.MinimalClient;
+import net.unethicalite.client.minimal.plugins.MinimalClassLoader;
+import net.unethicalite.client.minimal.plugins.MinimalPluginChanged;
+import net.unethicalite.client.minimal.plugins.MinimalPluginState;
+import net.unethicalite.client.minimal.plugins.PluginEntry;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -196,8 +196,17 @@ public class MinimalPluginManager
 
 	public void restartPlugin()
 	{
+		String currentPlugin = pluginEntry.toString();
 		stopPlugin();
-		startPlugin(pluginEntry);
+		List<PluginEntry> plugins = loadPlugins();
+		PluginEntry newEntry = plugins.stream()
+				.filter(e -> e.toString().equals(currentPlugin))
+				.findFirst().orElse(null);
+		if (newEntry == null)
+		{
+			return;
+		}
+		startPlugin(newEntry);
 	}
 
 	public void pauseScript()

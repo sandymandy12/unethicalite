@@ -154,7 +154,7 @@ open class BootstrapTask @Inject constructor(@Input val type: String) : DefaultT
                     it.file.name.contains("runescape-api") ||
                     it.file.name.contains("runelite-api") ||
                     it.file.name.contains("runelite-jshell")) {
-                path = "https://raw.githubusercontent.com/unethicalite/hosting/master/${type}/${it.file.name}"
+                path = "https://raw.githubusercontent.com/unethicalite/unethicalite-hosting/master/${type}/${it.file.name}"
             } else if (!group.contains("runelite")) {
                 path = "https://repo.maven.apache.org/maven2/" + group.replace(".", "/") + "/${name}/$version/${name}-$version"
                 if (it.classifier != null && it.classifier != "no_aop") {
@@ -167,7 +167,8 @@ open class BootstrapTask @Inject constructor(@Input val type: String) : DefaultT
                     it.file.name.contains("substance") ||
                     it.file.name.contains("gluegen") ||
                     it.file.name.contains("jogl") ||
-                    it.file.name.contains("jocl")
+                    it.file.name.contains("jocl") ||
+                    it.file.name.contains("rlawt")
             ) {
                 path = "https://repo.runelite.net/"
                 path += "${group.replace(".", "/")}/${name}/$version/${name}-$version"
@@ -239,7 +240,7 @@ open class BootstrapTask @Inject constructor(@Input val type: String) : DefaultT
         val sha = hash(cjar.readBytes())
         artifacts.add(JsonBuilder(
                 "name" to cjar.name,
-                "path" to "https://raw.githubusercontent.com/unethicalite/hosting/master/${type}/${cjar.name}",
+                "path" to "https://raw.githubusercontent.com/unethicalite/unethicalite-hosting/master/${type}/${cjar.name}",
                 "size" to cjar.length(),
                 "hash" to sha
         ))
@@ -252,7 +253,7 @@ open class BootstrapTask @Inject constructor(@Input val type: String) : DefaultT
     @TaskAction
     fun bootstrap() {
         val json = JsonBuilder(
-                "projectVersion" to ProjectVersions.openosrsVersion,
+                "projectVersion" to ProjectVersions.unethicaliteVersion,
                 "minimumLauncherVersion" to ProjectVersions.launcherVersion,
                 "launcherArguments" to launcherArguments,
                 "launcherJvm11Arguments" to launcherJvm11Arguments,
@@ -274,15 +275,15 @@ open class BootstrapTask @Inject constructor(@Input val type: String) : DefaultT
         val bootstrapDir = File("${project.buildDir}/bootstrap")
         bootstrapDir.mkdirs()
 
-        if (type == "stable") {
-            File(bootstrapDir, "bootstrap-openosrs.json").printWriter().use { out ->
-                out.println(prettyJson)
-            }
-
-            File(bootstrapDir, "bootstrap-staging.json").printWriter().use { out ->
-                out.println(prettyJson)
-            }
-        }
+//        if (type == "stable") {
+//            File(bootstrapDir, "bootstrap-openosrs.json").printWriter().use { out ->
+//                out.println(prettyJson)
+//            }
+//
+//            File(bootstrapDir, "bootstrap-staging.json").printWriter().use { out ->
+//                out.println(prettyJson)
+//            }
+//        }
 
         File(bootstrapDir, "bootstrap-${type}.json").printWriter().use { out ->
             out.println(prettyJson)

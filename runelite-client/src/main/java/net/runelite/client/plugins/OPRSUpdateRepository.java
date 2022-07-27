@@ -3,15 +3,8 @@ package net.runelite.client.plugins;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
-import java.io.FileNotFoundException;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import net.unethicalite.client.Static;
+import org.apache.commons.lang3.StringUtils;
 import org.pf4j.update.DefaultUpdateRepository;
 import org.pf4j.update.FileDownloader;
 import org.pf4j.update.FileVerifier;
@@ -22,6 +15,16 @@ import org.pf4j.update.util.LenientDateTypeAdapter;
 import org.pf4j.update.verifier.CompoundVerifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.FileNotFoundException;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class OPRSUpdateRepository implements UpdateRepository
 {
@@ -78,6 +81,7 @@ public class OPRSUpdateRepository implements UpdateRepository
 
 	public void initPlugins()
 	{
+		if (Static.getPluginRepoManager().isRepoMalicious(getOwner())) return;
 		Reader pluginsJsonReader;
 		try
 		{
@@ -126,6 +130,7 @@ public class OPRSUpdateRepository implements UpdateRepository
 					log.warn("Skipping release {} of plugin {} due to failure to build valid absolute URL. Url was {}{}", r.version, p.id, getUrl(), r.url);
 				}
 			}
+
 			p.setRepositoryId(getId());
 			plugins.put(p.id, p);
 		}
@@ -172,5 +177,10 @@ public class OPRSUpdateRepository implements UpdateRepository
 		}
 
 		return pluginsJsonFileName;
+	}
+
+	public String getOwner()
+	{
+		return StringUtils.substringBetween(id, "gh:", "/");
 	}
 }
