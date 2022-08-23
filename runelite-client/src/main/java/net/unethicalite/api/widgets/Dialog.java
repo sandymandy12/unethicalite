@@ -1,5 +1,6 @@
 package net.unethicalite.api.widgets;
 
+import net.unethicalite.api.commons.Predicates;
 import net.unethicalite.api.game.GameThread;
 import net.unethicalite.api.input.Keyboard;
 import net.unethicalite.api.items.GrandExchange;
@@ -13,6 +14,8 @@ import net.runelite.api.widgets.WidgetInfo;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 public class Dialog
@@ -23,7 +26,10 @@ public class Dialog
 	private static final Supplier<Widget> WEIRD_CONT = () -> Widgets.get(193, 3);
 	private static final Supplier<Widget> WEIRD_CONT_2 = () -> Widgets.get(633, 0);
 	private static final Supplier<Widget> NPC_CONT = () -> Widgets.get(WidgetID.DIALOG_NPC_GROUP_ID, 4);
+	private static final Supplier<Widget> NPC_TEXT = () -> Widgets.get(WidgetID.DIALOG_NPC_GROUP_ID, 6);
 	private static final Supplier<Widget> PLAYER_CONT = () -> Widgets.get(WidgetID.DIALOG_PLAYER_GROUP_ID, 3);
+	private static final Supplier<Widget> PLAYER_NAME = () -> Widgets.get(WidgetID.DIALOG_PLAYER_GROUP_ID, 4);
+	private static final Supplier<Widget> PLAYER_TEXT = () -> Widgets.get(WidgetID.DIALOG_PLAYER_GROUP_ID, 6);
 	private static final Supplier<Widget> DEATH_CONT = () -> Widgets.get(663, 0);
 	private static final Supplier<Widget> TUT_CONT = () -> Widgets.get(229, 2);
 	private static final Supplier<Widget> OPTIONS = () -> Widgets.get(WidgetID.DIALOG_OPTION_GROUP_ID, 1);
@@ -200,6 +206,19 @@ public class Dialog
 		return out;
 	}
 
+	public static boolean hasOption(String option)
+	{
+		return hasOption(Predicates.texts(option));
+	}
+
+	public static boolean hasOption(Predicate<String> option)
+	{
+		return getOptions().stream()
+				.map(Widget::getText)
+				.filter(Objects::nonNull)
+				.anyMatch(option);
+	}
+
 	public static void invokeDialog(DialogOption... dialogOption)
 	{
 		GameThread.invokeLater(() ->
@@ -225,5 +244,37 @@ public class Dialog
 	public static void close()
 	{
 		GameThread.invoke(() -> Static.getClient().runScript(138));
+	}
+
+	public static String getText()
+	{
+		Widget widget = null;
+
+		if (canContinueNPC())
+		{
+			widget = NPC_TEXT.get();
+		}
+		else if (canContinuePlayer())
+		{
+			widget = PLAYER_TEXT.get();
+		}
+
+		return widget == null ? "" : widget.getText();
+	}
+
+	public static String getName()
+	{
+		Widget widget = null;
+
+		if (canContinueNPC())
+		{
+			widget = NPC_CONT.get();
+		}
+		else if (canContinuePlayer())
+		{
+			widget = PLAYER_NAME.get();
+		}
+
+		return widget == null ? "" : widget.getText();
 	}
 }

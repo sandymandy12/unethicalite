@@ -1,16 +1,17 @@
 package net.unethicalite.client.config;
 
-import net.unethicalite.api.movement.pathfinder.model.JewelryBox;
-import net.unethicalite.client.managers.interaction.InteractMethod;
-import net.unethicalite.client.managers.interaction.MouseBehavior;
+import java.util.Set;
 import net.runelite.client.config.Button;
 import net.runelite.client.config.Config;
 import net.runelite.client.config.ConfigGroup;
 import net.runelite.client.config.ConfigItem;
 import net.runelite.client.config.ConfigSection;
 import net.runelite.client.config.Range;
-
+import net.unethicalite.api.movement.pathfinder.model.poh.HousePortal;
+import net.unethicalite.api.movement.pathfinder.model.poh.JewelryBox;
 import static net.unethicalite.client.config.UnethicaliteConfig.CONFIG_GROUP;
+import net.unethicalite.client.managers.interaction.InteractMethod;
+import net.unethicalite.client.managers.interaction.MouseBehavior;
 
 @ConfigGroup(CONFIG_GROUP)
 public interface UnethicaliteConfig extends Config
@@ -321,6 +322,30 @@ public interface UnethicaliteConfig extends Config
 	default JewelryBox hasJewelryBox()
 	{
 		return JewelryBox.NONE;
+	}
+
+	@ConfigItem(
+		keyName = "useEquipmentJewellery",
+		name = "Use jewellery from equipment",
+		description = "",
+		position = 4,
+		section = pathfinderSection
+	)
+	default boolean useEquipmentJewellery()
+	{
+		return true;
+	}
+
+	@ConfigItem(
+			keyName = "housePortals",
+			name = "House Portals",
+			description = "",
+			position = 4,
+			section = pathfinderSection
+	)
+	default Set<HousePortal> housePortals()
+	{
+		return Set.of();
 	}
 
 	@ConfigSection(

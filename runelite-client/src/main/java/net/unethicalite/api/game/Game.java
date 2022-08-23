@@ -2,13 +2,14 @@ package net.unethicalite.api.game;
 
 import lombok.Getter;
 import lombok.Setter;
+import net.runelite.api.Player;
+import net.runelite.api.coords.WorldPoint;
 import net.unethicalite.api.account.GameAccount;
-import net.unethicalite.api.movement.pathfinder.GlobalCollisionMap;
+import net.unethicalite.api.entities.Players;
 import net.unethicalite.api.widgets.Tab;
 import net.unethicalite.api.widgets.Tabs;
 import net.unethicalite.api.widgets.Widgets;
 import net.unethicalite.client.Static;
-import net.runelite.api.Client;
 import net.runelite.api.GameState;
 import net.runelite.api.packets.ClientPacket;
 import net.runelite.api.widgets.Widget;
@@ -26,21 +27,9 @@ public class Game
 	private static GameAccount gameAccount = null;
 
 	@Deprecated
-	public static Client getClient()
-	{
-		return Static.getClient();
-	}
-
-	@Deprecated
 	public static ClientPacket getClientPacket()
 	{
 		return Static.getClientPacket();
-	}
-
-	@Deprecated
-	public static GlobalCollisionMap getGlobalCollisionMap()
-	{
-		return Static.getGlobalCollisionMap();
 	}
 
 	public static boolean isLoggedIn()
@@ -51,12 +40,13 @@ public class Game
 	public static boolean isOnLoginScreen()
 	{
 		return getState() == GameState.LOGIN_SCREEN
-				|| getState() == GameState.LOGIN_SCREEN_AUTHENTICATOR;
+				|| getState() == GameState.LOGIN_SCREEN_AUTHENTICATOR
+				|| getState() == GameState.LOGGING_IN;
 	}
 
 	public static GameState getState()
 	{
-		return getClient().getGameState();
+		return Static.getClient().getGameState();
 	}
 
 	public static int getWildyLevel()
@@ -83,7 +73,14 @@ public class Game
 		{
 			return 0;
 		}
-		return Integer.parseInt(widgetText.replace("Level: ", ""));
+		if (widgetText.equals("Level: --"))
+		{
+			Player local = Players.getLocal();
+			int y = WorldPoint.fromLocal(Static.getClient(), local.getLocalLocation()).getY();
+			return 2 + (y - 3528) / 8;
+		}
+		String levelText = widgetText.contains("<br>") ? widgetText.substring(0, widgetText.indexOf("<br>")) : widgetText;
+		return Integer.parseInt(levelText.replace("Level: ", ""));
 	}
 
 	public static int getMembershipDays()
